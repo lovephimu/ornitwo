@@ -5,10 +5,11 @@ import { sql } from './connect';
 
 export type User = {
   id: number;
-  email: string;
-  password: string;
-  created: string;
-  updated: string;
+  username: string;
+  // email: string;
+  password_hash: string;
+  // created: string;
+  // updated: string;
 };
 
 export type Bird = {
@@ -16,6 +17,15 @@ export type Bird = {
   name: string;
   species: string;
 };
+
+export type Sighting = {
+  id: number;
+  userId: number;
+  birdId: number;
+};
+
+// GET BIRD METHODS
+// array destructuring in second function because only one result expected
 
 export const getBirds = cache(async () => {
   const birds = await sql<Bird[]>`
@@ -32,37 +42,64 @@ export const getBirdById = cache(async (id: number) => {
   return bird;
 });
 
-export const user = [
-  {
-    id: 1,
-    username: 'tdegoey0',
-    email: 'kplaunch0@nifty.com',
-    password: '$2a$04$I4GADbz421bdhXfLrIQEFuTfayHKgitMzwpb3miNczdWDmSE6kNn6',
-    created: '6/29/2022',
-    updated: '5/18/2023',
+// GET USER METHODS
+
+export const getUsers = cache(async () => {
+  const users = await sql<User[]>`
+SELECT * FROM users
+`;
+  return users;
+});
+
+export const getUserById = cache(async (id: number) => {
+  const [user] = await sql<User[]>`
+  SELECT * FROM users
+  WHERE id = ${id}
+  `;
+  return user;
+});
+
+export const createUser = cache(
+  async (username: string, passwordHash: string) => {
+    const [user] = await sql<User[]>`
+  INSERT INTO users
+  (username, password_hash)
+  VALUES (${username}, ${passwordHash})
+  RETURNING *
+  `;
+    return user;
   },
-  {
-    id: 2,
-    username: 'mnew1',
-    email: 'abeddingham1@wikipedia.org',
-    password: '$2a$04$LG.a8S2IkLP3m7NfwjpERuQ2BiNnnDk14acwxWRDPwnOm9MFzpYiO',
-    created: '9/10/2022',
-    updated: '7/17/2022',
-  },
-  {
-    id: 3,
-    username: 'ehayton2',
-    email: 'ccantillon2@lycos.com',
-    password: '$2a$04$iJRhcafiX3Fxkvcoje.gGORIXsvZP8xpurodTp6SskBzk4jYGyhoG',
-    created: '7/22/2022',
-    updated: '12/26/2022',
-  },
-  {
-    id: 4,
-    username: 'egabbitus3',
-    email: 'hbastin3@cafepress.com',
-    password: '$2a$04$qs/EdFPdYunlaaGJ18qTB.gUMwGo0E4Yo0TVBtRbgT8SUNWEd8jlS',
-    created: '12/18/2022',
-    updated: '4/5/2023',
-  },
-];
+);
+
+// GET SIGHTING METHODS
+
+export const getSightings = cache(async () => {
+  const sightings = await sql<Sighting[]>`
+  SELECT * FROM sightings
+`;
+  return sightings;
+});
+
+export const getSightingById = cache(async (id: number) => {
+  const [sighting] = await sql<Sighting[]>`
+  SELECT * FROM sightings
+  WHERE id = ${id}
+  `;
+  return sighting;
+});
+
+export const getSightingsByUserId = cache(async (id: number) => {
+  const sightingByUser = await sql<Sighting[]>`
+  SELECT * FROM sightings
+  WHERE user_id = ${id};
+  `;
+  return sightingByUser;
+});
+
+export const getSightingsByBirdId = cache(async (id: number) => {
+  const sightingByBird = await sql<Sighting[]>`
+  SELECT * FROM sightings
+  WHERE bird_id = ${id};
+  `;
+  return sightingByBird;
+});
