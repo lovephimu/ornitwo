@@ -17,6 +17,7 @@
     "@as-integrations/next": "^2.0.0",
     "@graphql-tools/schema": "^10.0.0",
     "@types/node": "20.3.1",
+    "bcrypt": "^5.1.0",
     "dotenv-cli": "^7.2.1",
     "dotenv-safe": "^8.2.0",
     "graphql": "^16.6.0",
@@ -28,10 +29,12 @@
     "sass": "^1.63.4",
     "server-only": "^0.0.1",
     "sharp": "^0.32.1",
-    "tsm": "^2.3.0"
+    "tsm": "^2.3.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@ts-safeql/eslint-plugin": "^1.1.4",
+    "@types/bcrypt": "^5.0.0",
     "@types/dotenv-safe": "^8.1.2",
     "@types/react": "18.2.12",
     "@types/react-dom": "18.2.5",

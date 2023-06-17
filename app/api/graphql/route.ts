@@ -1,12 +1,17 @@
+import crypto from 'node:crypto';
 import { gql } from '@apollo/client';
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-// import { GraphQLError } from 'graphql';
-// import { cookies } from 'next/headers';
+import bcrypt from 'bcrypt';
+import { GraphQLError } from 'graphql';
+import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
+import z from 'zod';
 import {
+  createSession,
   createUser,
+  deleteSessionByToken,
   getBirdById,
   getBirds,
   getSightingById,
@@ -14,8 +19,17 @@ import {
   getSightingsByBirdId,
   getSightingsByUserId,
   getUserById,
+  getUserByUsername,
   getUsers,
+  getUserWithPasswordHashByUsername,
 } from '../../../database/database';
+import { secureCookieOptions } from '../../../util/cookies';
+
+// TS Types
+
+type Token = {
+  token: string;
+};
 
 // SCHEMA GRAPHQL
 
@@ -40,7 +54,11 @@ const typeDefs = gql`
   }
   type Mutation {
     "Add a new user"
-    createNewUser(username: String, passwordHash: String): User
+    createNewUser(username: String!, passwordToHash: String!): User
+    "Login with zod checks and session creation"
+    login(username: String!, password: String!): User
+    "Logout by deleting sessionToken"
+    logout(token: String!): Token
   }
   type Bird {
     "The bird's ID"
@@ -56,8 +74,6 @@ const typeDefs = gql`
     id: ID!
     "Username"
     username: String!
-    "User's email"
-    email: String!
     "Encrypted password"
     passwordHash: String
     "Sightings by user"
@@ -71,6 +87,11 @@ const typeDefs = gql`
     userId: ID!
     "Bird ID"
     birdId: ID!
+  }
+
+  type Token {
+    "Token name"
+    token: String
   }
 `;
 
@@ -107,9 +128,126 @@ const resolvers = {
   Mutation: {
     createNewUser: async (
       parent: null,
-      args: { username: string; passwordHash: string },
+      args: { username: string; passwordToHash: string },
     ) => {
-      return await createUser(args.username, args.passwordHash);
+      // check if input contains data
+      if (!args.username || !args.passwordToHash) {
+        throw new GraphQLError('Required field is missing');
+      }
+      // zod check if username length is ok
+      const username = z.string().nonempty().min(3).max(30);
+      if (!username.safeParse(args.username).success) {
+        throw new GraphQLError(
+          'Username must be between 3 and 30 characters long.',
+        );
+      }
+      // zod check password
+      const password = z.string().min(3).max(10);
+      if (!password.safeParse(args.passwordToHash).success) {
+        throw new GraphQLError(
+          'Password must be between 3 and 10 characters long and contain at least one number and one special character.',
+        );
+      }
+      // compare username to database
+      const user = await getUserByUsername(args.username);
+      if (user) {
+        throw new GraphQLError('Username already exists.');
+      }
+      // encrypt password
+      const hashedPassword = await bcrypt.hash(args.passwordToHash, 10);
+      // create User and check process
+      const newUser = await createUser(args.username, hashedPassword);
+      if (!newUser) {
+        throw new GraphQLError(
+          'Internal server error (500): User creation failed',
+        );
+      }
+      // create token for newly registered user
+      const token = crypto.randomBytes(100).toString('base64');
+
+      // create session for new user
+      const session = await createSession(token, newUser.id);
+
+      // test whether session creation succeeded
+      if (!session) {
+        throw new GraphQLError('Creating session failed');
+      }
+
+      cookies().set({
+        name: 'sessionToken',
+        value: session.token,
+        ...secureCookieOptions,
+      });
+
+      return newUser;
+    },
+    login: async (
+      parent: null,
+      args: { username: string; password: string },
+    ) => {
+      // if (context.isUserLoggedIn) {
+      //   throw new GraphQLError('Unauthorized operation');
+      // }
+
+      // zod check definition
+      const username = z.string().min(1);
+      const password = z.string().min(1);
+
+      // zod input check
+      if (
+        !args.username ||
+        !args.password ||
+        !username.safeParse(args.username).success ||
+        !password.safeParse(args.password).success
+      ) {
+        throw new GraphQLError('Credentials are not valid');
+      }
+
+      // check if username exists
+      const userWithPasswordHash = await getUserWithPasswordHashByUsername(
+        args.username,
+      );
+      if (!userWithPasswordHash) {
+        throw new GraphQLError("Credentials don't match");
+      }
+
+      // check if password compares to hash
+      const isPasswordValid = await bcrypt.compare(
+        args.password,
+        userWithPasswordHash.passwordHash,
+      );
+      if (!isPasswordValid) {
+        throw new GraphQLError("Credentials don't match");
+      }
+
+      // create token for newly registered user
+      const token = crypto.randomBytes(100).toString('base64');
+
+      // create session for new user
+      const session = await createSession(token, userWithPasswordHash.id);
+
+      // test whether session creation succeeded
+      if (!session) {
+        throw new GraphQLError('Creating session failed');
+      }
+
+      cookies().set({
+        name: 'sessionToken',
+        value: session.token,
+        ...secureCookieOptions,
+      });
+    },
+    logout: async (parent: null, args: Token) => {
+      if (!args.token) return undefined;
+      const cookieStore = cookies();
+      const token = cookieStore.get(args.token);
+
+      // delete the session from the database
+      if (token) await deleteSessionByToken(token.value);
+
+      // set the cookie to be expired
+      await cookies().set('sessionToken', '', { maxAge: -1 });
+      // return await deleteSessionByToken(args.token);
     },
   },
 
@@ -148,3 +286,19 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   return await handler(req);
 }
+
+// export default startServerAndCreateNextHandler(apolloServer, {
+//   context: async (req, res) => {
+//     const user = await getUserBySessionToken(req.cookies.sessionToken!);
+//     const isUserLoggedIn = user ? true : false;
+//     return { req, res, isUserLoggedIn, user };
+//   },
+// });
+
+// export async function GET(req: NextRequest) {
+//   return await handler(req);
+// }
+
+// export async function POST(req: NextRequest) {
+//   return await handler(req);
+// }

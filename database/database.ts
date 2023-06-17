@@ -12,6 +12,10 @@ export type User = {
   // updated: string;
 };
 
+export type UserWithPasswordHash = User & {
+  passwordHash: string;
+};
+
 export type Bird = {
   id: number;
   name: string;
@@ -22,6 +26,12 @@ export type Sighting = {
   id: number;
   userId: number;
   birdId: number;
+};
+
+export type Session = {
+  id: number;
+  token: string;
+  userId: number;
 };
 
 // GET BIRD METHODS
@@ -59,13 +69,54 @@ export const getUserById = cache(async (id: number) => {
   return user;
 });
 
+export const getUserByUsername = cache(async (username: string) => {
+  const [user] = await sql<User[]>`
+    SELECT id, username FROM users
+    WHERE users.username = ${username.toLowerCase()}
+  `;
+  return user;
+});
+
+export const getUserWithPasswordHashByUsername = cache(
+  async (username: string) => {
+    const [user] = await sql<UserWithPasswordHash[]>`
+    SELECT * FROM
+      users
+    WHERE
+      users.username = ${username.toLowerCase()}
+ `;
+
+    return user;
+  },
+);
+
+export const getUserBySessionToken = cache(async (token: string) => {
+  const [user] = await sql<User[]>`
+  SELECT
+    users.id,
+    users.username
+  FROM
+    users
+  INNER JOIN
+    sessions ON (
+      sessions.token = ${token} AND
+      sessions.user_id = users.id AND
+      sessions.expiry_timestamp > now()
+    )
+  `;
+
+  return user;
+});
+
+// POST USER METHODS
+
 export const createUser = cache(
   async (username: string, passwordHash: string) => {
     const [user] = await sql<User[]>`
   INSERT INTO users
   (username, password_hash)
   VALUES (${username}, ${passwordHash})
-  RETURNING *
+  RETURNING id, username
   `;
     return user;
   },
@@ -102,4 +153,64 @@ export const getSightingsByBirdId = cache(async (id: number) => {
   WHERE bird_id = ${id};
   `;
   return sightingByBird;
+});
+
+// Sessions
+
+export const deleteExpiredSessions = cache(async () => {
+  await sql`
+    DELETE FROM
+      sessions
+    WHERE
+      expiry_timestamp < now()
+  `;
+});
+
+export const createSession = cache(async (token: string, userId: number) => {
+  const [session] = await sql<Session[]>`
+    INSERT INTO sessions
+      (token, user_id)
+    VALUES
+      (${token}, ${userId})
+    RETURNING
+      id,
+      token,
+      user_id
+  `;
+
+  // delete all sessions that are expired
+  await deleteExpiredSessions();
+
+  return session;
+});
+
+export const deleteSessionByToken = cache(async (token: string) => {
+  const [session] = await sql<{ id: number; token: string }[]>`
+    DELETE FROM
+      sessions
+    WHERE
+      sessions.token = ${token}
+    RETURNING
+      id,
+      token
+  `;
+
+  return session;
+});
+
+export const getValidSessionByToken = cache(async (token: string) => {
+  // Get the session if match the token AND is not expired
+  const [session] = await sql<{ id: number; token: string }[]>`
+    SELECT
+      sessions.id,
+      sessions.token
+    FROM
+      sessions
+    WHERE
+      sessions.token = ${token}
+    AND
+      sessions.expiry_timestamp > now()
+  `;
+
+  return session;
 });
