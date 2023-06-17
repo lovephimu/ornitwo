@@ -1,12 +1,16 @@
 import './globals.css';
 // import { gql } from '@apollo/client';
-import { Inter } from 'next/font/google';
+import {
+  Inter as Sans,
+  Noto_Serif_Display as Serif,
+  Roboto_Mono as Mono,
+} from 'next/font/google';
 // import { cookies } from 'next/headers';
 // import Link from 'next/link';
 // import { getClient } from '../util/apolloClient';
 import { ApolloClientProvider } from './ApolloClientProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const sans = Sans({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'orniTwo',
@@ -20,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={sans.className}>
         <ApolloClientProvider>{children}</ApolloClientProvider>
       </body>
     </html>
