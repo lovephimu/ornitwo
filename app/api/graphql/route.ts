@@ -173,7 +173,7 @@ const resolvers = {
         throw new GraphQLError('Creating session failed');
       }
 
-      cookies().set({
+      await cookies().set({
         name: 'sessionToken',
         value: session.token,
         ...secureCookieOptions,
@@ -231,11 +231,13 @@ const resolvers = {
         throw new GraphQLError('Creating session failed');
       }
 
-      cookies().set({
+      await cookies().set({
         name: 'sessionToken',
         value: session.token,
         ...secureCookieOptions,
       });
+
+      return userWithPasswordHash;
     },
     logout: async (parent: null, args: Token) => {
       if (!args.token) return undefined;

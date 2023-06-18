@@ -1,8 +1,8 @@
 import './globals.css';
 // import { gql } from '@apollo/client';
 import {
-  Inter as Sans,
   Noto_Serif_Display as Serif,
+  Roboto_Flex as Sans,
   Roboto_Mono as Mono,
 } from 'next/font/google';
 // import { cookies } from 'next/headers';
@@ -10,7 +10,18 @@ import {
 // import { getClient } from '../util/apolloClient';
 import { ApolloClientProvider } from './ApolloClientProvider';
 
-const sans = Sans({ subsets: ['latin'] });
+const sans = Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
+const serif = Serif({
+  subsets: ['latin'],
+  variable: '--font-serif',
+});
+const mono = Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+});
 
 export const metadata = {
   title: 'orniTwo',
@@ -24,7 +35,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={sans.className}>
+      <body
+        className={`bg-gray-800 text-yellow-550 ${sans.variable} ${mono.variable} ${serif.variable}`}
+      >
         <ApolloClientProvider>{children}</ApolloClientProvider>
       </body>
     </html>
