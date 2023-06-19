@@ -2,13 +2,13 @@ import { Sql } from 'postgres';
 import { Bird } from '../database/database';
 
 export const birds: Bird[] = [
-  { id: 1, name: 'White rhinoceros', species: 'Ceratotherium simum' },
-  { id: 2, name: 'Otter, cape clawless', species: 'Aonyx capensis' },
-  { id: 3, name: 'Komodo dragon', species: 'Varanus komodensis' },
+  { id: 1, name: 'house sparrow', species: 'passer domesticus' },
+  { id: 2, name: 'kestrel', species: 'falco tinnunculus' },
+  { id: 3, name: 'wagtail', species: 'motacilla alba' },
   {
     id: 4,
-    name: 'Opossum, american virginia',
-    species: 'Didelphis virginiana',
+    name: 'stork',
+    species: 'ciconia ciconia',
   },
 ];
 

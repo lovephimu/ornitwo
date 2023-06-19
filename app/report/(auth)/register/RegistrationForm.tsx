@@ -37,8 +37,8 @@ export default function RegistrationForm(props: Props) {
 
   return (
     <form className="flex flex-col items-center font-sans font-extralight text-xl">
-      <label htmlFor="username" className="p-4">
-        Username
+      <label htmlFor="username" className="font-mono pt-8 pb-4">
+        Username:
       </label>
       <input
         id="username"
@@ -49,8 +49,8 @@ export default function RegistrationForm(props: Props) {
         required
         className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
       />
-      <label htmlFor="password" className="p-4">
-        Password
+      <label htmlFor="password" className="font-mono pt-8 pb-4">
+        Password:
       </label>
       <input
         id="password"
@@ -63,6 +63,7 @@ export default function RegistrationForm(props: Props) {
         className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
       />
       <button
+        className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800"
         formAction={async () => {
           await registrationHandler();
         }}

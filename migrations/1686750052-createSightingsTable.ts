@@ -9,7 +9,9 @@ export async function up(sql: Sql) {
     user_id integer NOT NULL,
     bird_id integer NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (bird_id) REFERENCES birds (id)
+    FOREIGN KEY (bird_id) REFERENCES birds (id),
+    location text,
+    time_stamp text
   )
   `;
 }

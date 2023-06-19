@@ -6,14 +6,16 @@ import { sql } from './connect';
 export type User = {
   id: number;
   username: string;
-  // email: string;
-  password_hash: string;
-  // created: string;
-  // updated: string;
+  passwordHash: string;
 };
 
 export type UserWithPasswordHash = User & {
   passwordHash: string;
+};
+
+export type UserWithoutSession = {
+  id: number;
+  username: string;
 };
 
 export type Bird = {
@@ -26,6 +28,8 @@ export type Sighting = {
   id: number;
   userId: number;
   birdId: number;
+  location: string;
+  timeStamp: string;
 };
 
 export type Session = {
@@ -48,6 +52,14 @@ export const getBirdById = cache(async (id: number) => {
   const [bird] = await sql<Bird[]>`
   SELECT * FROM birds
   WHERE id = ${id}
+  `;
+  return bird;
+});
+
+export const getBirdIdByName = cache(async (birdName: string) => {
+  const [bird] = await sql<Bird[]>`
+  SELECT * FROM birds
+  WHERE name = ${birdName}
   `;
   return bird;
 });
@@ -112,7 +124,7 @@ export const getUserBySessionToken = cache(async (token: string) => {
 
 export const createUser = cache(
   async (username: string, passwordHash: string) => {
-    const [user] = await sql<User[]>`
+    const [user] = await sql<UserWithoutSession[]>`
   INSERT INTO users
   (username, password_hash)
   VALUES (${username}, ${passwordHash})
@@ -154,6 +166,25 @@ export const getSightingsByBirdId = cache(async (id: number) => {
   `;
   return sightingByBird;
 });
+
+// POST SIGHTING METHODS
+
+export const createSightingReport = cache(
+  async (
+    userId: number,
+    birdId: number,
+    location: string,
+    timeStamp: string,
+  ) => {
+    const [sighting] = await sql<Sighting[]>`
+  INSERT INTO sightings
+  (user_id, bird_id, location, time_stamp)
+  VALUES (${userId}, ${birdId}, ${location}, ${timeStamp})
+  RETURNING id, user_id, bird_id, location, time_stamp
+  `;
+    return sighting;
+  },
+);
 
 // Sessions
 

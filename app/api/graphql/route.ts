@@ -10,9 +10,11 @@ import { NextRequest } from 'next/server';
 import z from 'zod';
 import {
   createSession,
+  createSightingReport,
   createUser,
   deleteSessionByToken,
   getBirdById,
+  getBirdIdByName,
   getBirds,
   getSightingById,
   getSightings,
@@ -59,6 +61,13 @@ const typeDefs = gql`
     login(username: String!, password: String!): User
     "Logout by deleting sessionToken"
     logout(token: String!): Token
+    "Create a new sighting entry"
+    createSighting(
+      userId: Int!
+      birdName: String!
+      location: String
+      timeStamp: String
+    ): Sighting
   }
   type Bird {
     "The bird's ID"
@@ -87,6 +96,10 @@ const typeDefs = gql`
     userId: ID!
     "Bird ID"
     birdId: ID!
+    "Location"
+    location: String
+    "Timestamp"
+    timeStamp: String
   }
 
   type Token {
@@ -250,6 +263,32 @@ const resolvers = {
       // set the cookie to be expired
       await cookies().set('sessionToken', '', { maxAge: -1 });
       // return await deleteSessionByToken(args.token);
+    },
+    createSighting: async (
+      parent: null,
+      args: {
+        userId: number;
+        birdName: string;
+        location: string;
+        timeStamp: string;
+      },
+    ) => {
+      const birdData = await getBirdIdByName(args.birdName);
+
+      const newSighting = await createSightingReport(
+        args.userId,
+        birdData!.id,
+        args.location,
+        args.timeStamp,
+      );
+
+      await cookies().set({
+        name: 'reportSummary',
+        value: newSighting!.id.toString(),
+        ...secureCookieOptions,
+      });
+
+      return newSighting;
     },
   },
 
