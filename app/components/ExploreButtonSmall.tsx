@@ -1,11 +1,9 @@
+'use client';
+
 import { Route } from 'next';
 import { useRouter } from 'next/navigation';
 
-type Props = {
-  userId: number;
-};
-
-export default function AccountButton(props: Props) {
+export default function ExploreButtonSmall() {
   const router = useRouter();
 
   return (
@@ -13,10 +11,10 @@ export default function AccountButton(props: Props) {
       className="font-mono text-xl"
       onClick={() => {
         router.refresh();
-        router.push(`/report/account/${props.userId}` as Route);
+        router.push('/explore' as Route);
       }}
     >
-      Account
+      Explore
     </button>
   );
 }

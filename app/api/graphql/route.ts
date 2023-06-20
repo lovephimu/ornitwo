@@ -102,6 +102,8 @@ const typeDefs = gql`
     timeStamp: String
     "Related Bird"
     birdData: Bird
+    "Related User"
+    userData: User
   }
 
   type Token {
@@ -322,6 +324,10 @@ const resolvers = {
       const birdData = await getBirdById(parent.birdId);
       // console.log(birdData?.name + 'from query');
       return birdData;
+    },
+    userData: async (parent: { userId: number }) => {
+      const userData = await getUserById(parent.userId);
+      return userData;
     },
   },
 };

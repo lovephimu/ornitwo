@@ -1,7 +1,9 @@
 'use client';
 
 import { gql, useQuery } from '@apollo/client';
+import AccountButton from '../../components/AccountButton';
 import ExploreButton from '../../components/ExploreButton';
+import LoadingStatement from '../../components/LoadingStatement';
 import LogoutButton from '../../components/LogoutButton';
 import ReportButton from '../../components/ReportButton';
 
@@ -23,6 +25,9 @@ const reportQuery = gql`
         name
         species
       }
+      userData {
+        username
+      }
     }
   }
 `;
@@ -32,27 +37,22 @@ export default function Summary(props: Props) {
     variables: { sightingId: props.sightingId },
     fetchPolicy: 'cache-first',
   });
-  // console.log(props.sightingId + ' from summary');
-  // console.log(data + ' from summary');
-  // console.log(loading);
-  // console.log(error);
+  if (error) {
+    console.log(error);
+  }
   if (loading) {
-    return (
-      <div className="flex w-full items-center justify-center h-screen">
-        <p>loading...</p>
-      </div>
-    );
+    return <LoadingStatement />;
   }
   return (
     <main className="flex flex-col w-full items-center h-screen">
       <section className="flex items-center w-full p-8 justify-between font-extralight">
         <LogoutButton token={props.token} />
-        <p className="font-mono text-xl">Account</p>
+        <AccountButton userId={data.sighting.userId} />
       </section>
       <section className="flex flex-col w-full ">
         <div className="flex flex-col justify-center w-full pt-12 p-6 items-center font-mono">
-          <h2 className="text-center text-2xl">
-            Thanks for your report, (username)
+          <h2 className="text-center text-2xl px-8">
+            Thanks for your report, {data.sighting.userData.username}!
           </h2>
           <p className="text-center pt-6">Report summary:</p>
         </div>
