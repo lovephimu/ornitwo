@@ -100,12 +100,29 @@ const typeDefs = gql`
     location: String
     "Timestamp"
     timeStamp: String
+    "Related Bird"
+    birdData: Bird
   }
 
   type Token {
     "Token name"
     token: String
   }
+
+  # type Summary {
+  #   "The summarized report"
+  #   id: ID!
+  #   "userId"
+  #   userId: Int
+  #   "birdId"
+  #   birdId: Int
+  #   "location"
+  #   location: String
+  #   "time"
+  #   time: String
+  #   "Bird name and species"
+  #   bird: Bird
+  # }
 `;
 
 // RESOLVERS
@@ -297,6 +314,14 @@ const resolvers = {
   User: {
     sightings: async (parent: { id: number }) => {
       return await getSightingsByUserId(parent.id);
+    },
+  },
+
+  Sighting: {
+    birdData: async (parent: { birdId: number }) => {
+      const birdData = await getBirdById(parent.birdId);
+      // console.log(birdData?.name + 'from query');
+      return birdData;
     },
   },
 };

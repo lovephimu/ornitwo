@@ -64,9 +64,8 @@ export default function ReportForm(props: Props) {
       console.log(onError);
     },
     onCompleted: () => {
-      // cookies().set({ name: 'reportSummary', value: 'test' });
       router.refresh();
-      // router.push(`/report/summary` as Route);
+      router.push(`/report/summary` as Route);
     },
   });
 
