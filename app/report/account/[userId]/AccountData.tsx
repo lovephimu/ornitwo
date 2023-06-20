@@ -1,6 +1,7 @@
 'use client';
 
 import { gql, useQuery } from '@apollo/client';
+import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
@@ -78,8 +79,9 @@ export default function AccountData(props: Props) {
       <section className="flex flex-col flex-grow w-full bg-gray-750 p-8 items-center">
         <h2 className="font-mono text-2xl pb-8 ">Your sightings:</h2>
         <div className="flex w-full justify-between font-mono font-light text-xl border-b border-dotted border-yellow-550">
-          <span className="flex">I saw a...</span>
-          <span className="flex">...at, on:</span>
+          <span className="flex flex-grow">I saw a...</span>
+          <span className="flex w-1/4 justify-end">...at,</span>
+          <span className="flex w-1/6 justify-end">on:</span>
         </div>
         {data.user.sightings.map((sighting: Sighting) => {
           return (
@@ -88,7 +90,7 @@ export default function AccountData(props: Props) {
               className="flex w-full pt-4 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
             >
               <Link
-                href={`/explore/birds/${sighting.birdData.id}`}
+                href={`/explore/birds/${sighting.birdData.id}` as Route}
                 className="flex font-bold w-1/4"
               >
                 {sighting.birdData.name}

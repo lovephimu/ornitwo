@@ -1,3 +1,5 @@
+'use client';
+
 import { Route } from 'next';
 import { useRouter } from 'next/navigation';
 
