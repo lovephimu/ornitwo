@@ -2,6 +2,7 @@
 
 import { gql, useQuery } from '@apollo/client';
 import Image from 'next/image';
+import MonthSum from '../../../charts/monthSumSchema';
 import LoadingStatement from '../../../components/LoadingStatement';
 import { capitalizeFirstLetter } from '../../../functions/capitalizeFirstLetter';
 
@@ -9,7 +10,7 @@ type Props = {
   birdId: string;
 };
 
-type SightingByBird = {
+export type SightingByBird = {
   id: number;
   userData: {
     id: number;
@@ -69,6 +70,9 @@ export default function BirdData(props: Props) {
       </section>
       <section className="flex flex-col w-full bg-gray-750 items-center p-8">
         <h2 className="font-mono text-2xl">Average spottings:</h2>
+        <div className="pt-8 w-full justify-center">
+          <MonthSum />
+        </div>
       </section>
       <section className="flex flex-col w-full bg-gray-800 items-center p-8">
         <h2 className="font-mono text-2xl pb-8 ">Last seen by:</h2>

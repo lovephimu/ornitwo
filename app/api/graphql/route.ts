@@ -6,7 +6,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 import { cookies } from 'next/headers';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import z from 'zod';
 import {
   createSession,
@@ -110,21 +110,6 @@ const typeDefs = gql`
     "Token name"
     token: String
   }
-
-  # type Summary {
-  #   "The summarized report"
-  #   id: ID!
-  #   "userId"
-  #   userId: Int
-  #   "birdId"
-  #   birdId: Int
-  #   "location"
-  #   location: String
-  #   "time"
-  #   time: String
-  #   "Bird name and species"
-  #   bird: Bird
-  # }
 `;
 
 // RESOLVERS
@@ -351,12 +336,12 @@ const handler = startServerAndCreateNextHandler<NextRequest>(apolloServer, {
   },
 });
 
-export async function GET(req: NextRequest) {
-  return await handler(req);
+export async function GET(req: NextRequest): Promise<NextResponse<any>> {
+  return (await handler(req)) as NextResponse<any>;
 }
 
-export async function POST(req: NextRequest) {
-  return await handler(req);
+export async function POST(req: NextRequest): Promise<NextResponse<any>> {
+  return (await handler(req)) as NextResponse<any>;
 }
 
 // export default startServerAndCreateNextHandler(apolloServer, {
