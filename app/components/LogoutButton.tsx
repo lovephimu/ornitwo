@@ -5,7 +5,7 @@ import { Route } from 'next';
 import { useRouter } from 'next/navigation';
 
 type Prop = {
-  token: string;
+  token: string | undefined;
 };
 
 const logoutMutation = gql`
@@ -28,6 +28,20 @@ export default function LogoutButton(props: Prop) {
       router.push(`/` as Route);
     },
   });
+
+  if (!props.token) {
+    return (
+      <button
+        className="font-mono text-xl"
+        onClick={() => {
+          router.refresh();
+          router.push('/report/login' as Route);
+        }}
+      >
+        Login
+      </button>
+    );
+  }
 
   return (
     <button

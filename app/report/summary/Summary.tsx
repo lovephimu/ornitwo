@@ -1,11 +1,16 @@
 'use client';
 
 import { gql, useQuery } from '@apollo/client';
+import { Route } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import AccountButton from '../../components/AccountButton';
 import ExploreButton from '../../components/ExploreButton';
 import LoadingStatement from '../../components/LoadingStatement';
 import LogoutButton from '../../components/LogoutButton';
 import ReportButton from '../../components/ReportButton';
+import { capitalizeFirstLetter } from '../../functions/capitalizeFirstLetter';
+import { capitalizeFirstLetterOnly } from '../../functions/capitalizeFirstLetterOnly';
 
 type Props = {
   sightingId: string;
@@ -59,21 +64,46 @@ export default function Summary(props: Props) {
       </section>
       <section className="flex flex-col flex-grow w-full items-center">
         <div className="bg-transparent border border-dotted border-yellow-550 w-3/4 text-center py-4 font-mono">
-          <div className="border-b border-dotted border-yellow-550 py-4 text-xl">
-            {data.sighting.birdData.name}
+          <div className="flex border-b border-dotted border-yellow-550 py-4 text-2xl justify-center">
+            <Image
+              src="/images/icon_bird.svg"
+              height={40}
+              width={40}
+              alt="Bird Icon"
+              className="pr-4"
+            />
+            <Link href={`/explore/birds/${data.sighting.birdData.id}` as Route}>
+              {capitalizeFirstLetter(data.sighting.birdData.name)}
+            </Link>
           </div>
           <p className="border-b border-dotted border-yellow-550 py-4 italic font-light">
-            {data.sighting.birdData.species}
+            {capitalizeFirstLetterOnly(data.sighting.birdData.species)}
           </p>
           <p className="pt-8 pb-4 font-light">Location:</p>
-          <div className="flex justify-center">
-            <span className="pr-4">o</span>
-            <span className="pb-4 text-xl">{data.sighting.location}</span>
+          <div className="flex w-full justify-center">
+            <div>
+              <Image
+                src="/images/icon_map_marker.svg"
+                height={40}
+                width={40}
+                alt="Map Icon"
+                className="pr-4"
+              />
+            </div>
+            <div className="pb-4 text-xl">{data.sighting.location}</div>
           </div>
           <p className="py-4 font-light">Time:</p>
-          <div className="flex justify-center">
-            <span className="pr-4">o</span>
-            <span className="pb-4 text-xl">{data.sighting.timeStamp}</span>
+          <div className="flex w-full justify-center">
+            <div>
+              <Image
+                src="/images/icon_calendar.svg"
+                height={40}
+                width={40}
+                alt="Calendar icon"
+                className="pr-4"
+              />
+            </div>
+            <div className="pb-4 text-xl">{data.sighting.timeStamp}</div>
           </div>
         </div>
       </section>

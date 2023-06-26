@@ -1,13 +1,24 @@
 'use client';
 
 import { gql, useQuery } from '@apollo/client';
+import { Route } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import MonthSum from '../../../charts/monthSumSchema';
+import ExploreButton from '../../../components/ExploreButton';
 import LoadingStatement from '../../../components/LoadingStatement';
+import ReportButton from '../../../components/ReportButton';
 import { capitalizeFirstLetter } from '../../../functions/capitalizeFirstLetter';
+import { capitalizeFirstLetterOnly } from '../../../functions/capitalizeFirstLetterOnly';
+import { formatDate } from '../../../functions/formatDate';
+import { sortBirdSightingsByDate } from '../../../functions/sortBirdSightingByDate';
 
 type Props = {
   birdId: string;
+};
+
+export type SightingsByBirdResponse = {
+  sightingsByBird: [SightingByBird];
 };
 
 export type SightingByBird = {
@@ -59,7 +70,7 @@ export default function BirdData(props: Props) {
           {capitalizeFirstLetter(data.sightingsByBird[0].birdData.name)}
         </h1>
         <h2 className="text-2xl pt-4">
-          {data.sightingsByBird[0].birdData.species}
+          {capitalizeFirstLetterOnly(data.sightingsByBird[0].birdData.species)}
         </h2>
         <Image
           height={600}
@@ -71,32 +82,43 @@ export default function BirdData(props: Props) {
       <section className="flex flex-col w-full bg-gray-750 items-center p-8">
         <h2 className="font-mono text-2xl">Average spottings:</h2>
         <div className="pt-8 w-full justify-center">
-          <MonthSum />
+          <MonthSum data={data} />
         </div>
       </section>
       <section className="flex flex-col w-full bg-gray-800 items-center p-8">
         <h2 className="font-mono text-2xl pb-8 ">Last seen by:</h2>
         <div className="flex w-full justify-between font-mono font-light text-xl border-b border-dotted border-yellow-550">
-          <span className="flex flex-grow">User</span>
-          <span className="flex w-1/4 justify-end">...at,</span>
-          <span className="flex w-1/6 justify-end">on:</span>
+          <span className="flex flex-grow">User...</span>
+          <span className="flex justify-end">...on, at</span>
         </div>
-        {data.sightingsByBird.map((sighting: SightingByBird) => {
-          return (
-            <div
-              key={`sighting-${sighting.id}`}
-              className="flex w-full pt-4 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
-            >
-              <span className="flex flex-grow font-bold">
-                {sighting.userData.username}
-              </span>
-              <span className="w-1/4 text-right">{sighting.location} </span>
-              <span className="flex text-right justify-end w-1/6 font-bold">
-                {sighting.timeStamp}
-              </span>
-            </div>
-          );
-        })}
+        <div className="pb-8 w-full">
+          {sortBirdSightingsByDate(data).map((sighting) => {
+            return (
+              <div
+                key={`sighting-${sighting.id}`}
+                className="flex flex-col w-full pt-4 pb-2 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
+              >
+                <div className="flex w-full text-xl">
+                  <span className="flex flex-grow font-bold">
+                    <Link href={`/report/account/${sighting.userId}` as Route}>
+                      {sighting.username}
+                    </Link>
+                  </span>
+                  <span className=" text-right w-1/6 font-bold">
+                    {formatDate(sighting.time)}
+                  </span>
+                </div>
+                <div className="flex w-full pt-2 justify-end">
+                  <span className="flex">{sighting.location} </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+      <section className="flex flex-col self-start w-full h-60 text-3xl">
+        <ExploreButton />
+        <ReportButton />
       </section>
     </section>
   );

@@ -4,24 +4,55 @@ import { gql, useQuery } from '@apollo/client';
 import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
+import MostSeenBirdsDoughnut from '../../../charts/mostSeenBirds';
+import ExploreButton from '../../../components/ExploreButton';
 import LoadingStatement from '../../../components/LoadingStatement';
-import LogoutButton from '../../../components/LogoutButton';
+import ReportButton from '../../../components/ReportButton';
+import { capitalizeFirstLetter } from '../../../functions/capitalizeFirstLetter';
+import { capitalizeFirstLetterOnly } from '../../../functions/capitalizeFirstLetterOnly';
+import { formatDate } from '../../../functions/formatDate';
+import { sortUserSightingsByDate } from '../../../functions/sortUserSightingsByDate';
 
 type Props = {
-  token: string;
   userId: string;
 };
 
-type Sighting = {
-  id: number;
-  timeStamp: string;
+// type Sighting = {
+//   id: number;
+//   timeStamp: string;
+//   location: string;
+//   birdData: {
+//     id: number;
+//     name: string;
+//     species: string;
+//   };
+// };
+
+type SortedUserSighting = {
+  id: string | number;
+  birdId: string | number;
+  name: string;
+  species: string;
   location: string;
+  time: Date;
+};
+
+export type UserSightingResponse = {
+  user: {
+    username: string;
+    sightings: [UserSighting];
+  };
+};
+
+export type UserSighting = {
   birdData: {
     id: number;
     name: string;
     species: string;
   };
+  timeStamp: string;
+  location: string;
+  id: number;
 };
 
 const userQuery = gql`
@@ -48,7 +79,7 @@ export default function AccountData(props: Props) {
     fetchPolicy: 'cache-first',
   });
   if (error) {
-    console.log(error);
+    console.log(error.message);
   }
   if (loading) {
     return <LoadingStatement />;
@@ -56,10 +87,6 @@ export default function AccountData(props: Props) {
 
   return (
     <main className="flex flex-col w-full items-center h-screen">
-      <section className="flex items-center w-full p-8 justify-between font-extralight">
-        <LogoutButton token={props.token} />
-        <ExploreButtonSmall />
-      </section>
       <section className="flex flex-col w-full bg-gray-775">
         <div className="flex flex-col justify-center items-center w-full pt-12">
           <h2 className="font-mono text-2xl">Profile</h2>
@@ -76,40 +103,48 @@ export default function AccountData(props: Props) {
           </div>
         </div>
       </section>
-      <section className="flex flex-col flex-grow w-full bg-gray-750 p-8 items-center">
-        <h2 className="font-mono text-2xl pb-8 ">Your sightings:</h2>
+      <section className="flex flex-col w-full bg-gray-800 items-center p-8">
+        <h2 className="font-mono text-2xl ">Most spotted birds:</h2>
+        <div className="flex justify-center w-full p-8">
+          <MostSeenBirdsDoughnut data={data} />
+        </div>
+      </section>
+      <section className="flex flex-col flex-grow w-full bg-gray-775 p-8 items-center">
+        <h2 className="font-mono text-2xl pb-8 ">Last sightings:</h2>
         <div className="flex w-full justify-between font-mono font-light text-xl border-b border-dotted border-yellow-550">
           <span className="flex flex-grow">I saw a...</span>
-          <span className="flex w-1/4 justify-end">...at,</span>
-          <span className="flex w-1/6 justify-end">on:</span>
+          <span className="flex justify-end">...on, at:</span>
         </div>
-        {data.user.sightings.map((sighting: Sighting) => {
+        {sortUserSightingsByDate(data).map((sighting: SortedUserSighting) => {
           return (
             <div
               key={`sightingId ${sighting.id}`}
-              className="flex w-full pt-4 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
+              className="w-full pt-4 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
             >
-              <Link
-                href={`/explore/birds/${sighting.birdData.id}` as Route}
-                className="flex font-bold w-1/4"
-              >
-                {sighting.birdData.name}
-              </Link>
-              <span className="flex w-1/4 italic">
-                {sighting.birdData.species}
-              </span>
-              <span className="flex flex-grow" />
-              <span className="w-1/4 text-right">{sighting.location} </span>
-              <span className="flex text-right justify-end w-1/6 font-bold">
-                {sighting.timeStamp}
-              </span>
+              <div className="flex w-full text-xl">
+                <span className="flex flex-grow font-bold w-1/4">
+                  <Link href={`/explore/birds/${sighting.birdId}` as Route}>
+                    {capitalizeFirstLetter(sighting.name)}
+                  </Link>
+                </span>
+                <span className="flex text-right justify-end w-1/6 font-bold">
+                  {formatDate(sighting.time)}
+                </span>
+              </div>
+              <div className="flex w-full pt-2 pb-2">
+                <span className="flex flex-grow w-1/4 italic">
+                  {capitalizeFirstLetterOnly(sighting.species)}
+                </span>
+                <span className="flex flex-grow" />
+                <span className="w-1/2 text-right">{sighting.location} </span>
+              </div>
             </div>
           );
         })}
       </section>
-      <section className="flex flex-col w-full bg-gray-775 items-center">
-        <h2 className="font-mono text-2xl py-8 ">Your statistics:</h2>
-        <div className="h-1/2">statistic chart</div>
+      <section className="flex flex-col self-start w-full h-60 text-3xl">
+        <ExploreButton />
+        <ReportButton />
       </section>
     </main>
   );

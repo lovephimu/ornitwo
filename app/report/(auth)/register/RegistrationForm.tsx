@@ -68,7 +68,7 @@ export default function RegistrationForm(props: Props) {
           await registrationHandler();
         }}
       >
-        Login
+        Sign up
       </button>
     </form>
   );

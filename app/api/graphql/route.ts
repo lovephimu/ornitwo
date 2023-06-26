@@ -279,9 +279,13 @@ const resolvers = {
     ) => {
       const birdData = await getBirdIdByName(args.birdName);
 
+      if (!birdData) {
+        throw new GraphQLError('Bird name not in database.');
+      }
+
       const newSighting = await createSightingReport(
         args.userId,
-        birdData!.id,
+        birdData.id,
         args.location,
         args.timeStamp,
       );

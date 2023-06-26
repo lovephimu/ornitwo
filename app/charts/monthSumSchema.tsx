@@ -1,17 +1,38 @@
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-import { testData } from './testData';
+import { monthSum, SightingsResponse } from '../functions/monthSum';
 
 Chart.register(CategoryScale);
 
-export default function MonthSum() {
+type Props = {
+  data: SightingsResponse;
+};
+
+export const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+export default function MonthSum(props: Props) {
+  const summedValues = monthSum(props.data);
+
   const chartData = {
-    labels: testData.map((data) => data.month),
+    labels: months,
     datasets: [
       {
         label: 'Spotted: ',
-        data: testData.map((data) => data.sum),
+        data: summedValues,
         borderColor: '#FBB159',
         borderWidth: 2,
         pointBackgroundColor: '#FBB159',
@@ -26,7 +47,7 @@ export default function MonthSum() {
         options={{
           scales: {
             y: {
-              ticks: { color: '#FBB159' },
+              ticks: { color: '#FBB159', stepSize: 5 },
               grid: {
                 color: '#1F2937',
               },

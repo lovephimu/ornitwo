@@ -4,7 +4,7 @@ import { Route } from 'next';
 import { useRouter } from 'next/navigation';
 
 type Props = {
-  userId: number;
+  userId: number | undefined;
 };
 
 export default function AccountButton(props: Props) {
@@ -15,7 +15,11 @@ export default function AccountButton(props: Props) {
       className="font-mono text-xl"
       onClick={() => {
         router.refresh();
-        router.push(`/report/account/${props.userId}` as Route);
+        router.push(
+          props.userId
+            ? (`/report/account/${props.userId}` as Route)
+            : ('/report/login' as Route),
+        );
       }}
     >
       Account

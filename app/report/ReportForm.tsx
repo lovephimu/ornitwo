@@ -2,12 +2,11 @@
 
 import { gql, useMutation } from '@apollo/client';
 import { Route } from 'next';
-import { cookies } from 'next/headers';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { getUserBySessionToken } from '../../database/database';
-import { getCookie } from '../../util/cookies';
-import { getSafeReturnToPath } from '../../util/validation';
+import { useRef, useState } from 'react';
+import { decreaseDate, increaseDate } from '../functions/changeDate';
+import { formatDate } from '../functions/formatDate';
+import { makeMaxRange, makeTimeObject } from '../functions/makeTimeObject';
 
 const createSightingMutation = gql`
   mutation CreateSighting(
@@ -34,34 +33,30 @@ type Props = {
   matchingUserId: number;
 };
 
-// async function setSummaryCookie(
-//   birdName: string,
-//   species: string,
-//   location: string,
-//   timeStamp: string,
-// ) {
-//   const reportSummary = {test: test}
-//   await cookies().set('reportSummary', reportSummary);
-// }
-
 export default function ReportForm(props: Props) {
   const [birdName, setBirdName] = useState('');
   const [location, setLocation] = useState('');
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState(formatDate(new Date()));
   const [onError, setOnError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  const currentTime = new Date(makeTimeObject(time));
+  const initialTime = useRef(currentTime);
+  const maxTime = makeMaxRange(time);
+  const initialMaxTime = useRef(maxTime);
+  console.log(initialMaxTime);
 
   const [sightingHandler] = useMutation(createSightingMutation, {
     variables: {
       userId: props.matchingUserId,
-      birdName: birdName,
+      birdName: birdName.toLowerCase(),
       location: location,
       timeStamp: time,
     },
     onError: (error) => {
       setOnError(error.message);
-      console.log(onError);
+      setLoading(false);
     },
     onCompleted: () => {
       router.refresh();
@@ -72,7 +67,7 @@ export default function ReportForm(props: Props) {
   return (
     <form className="flex flex-col items-center font-sans font-extralight text-xl">
       <label htmlFor="birdName" className="font-mono p-4">
-        Bird name:
+        Bird name (common name):
       </label>
       <input
         id="birdName"
@@ -81,8 +76,11 @@ export default function ReportForm(props: Props) {
           setBirdName(event.currentTarget.value);
         }}
         required
-        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
+        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
       />
+      <span>
+        {onError ? <p className="pt-4 text-red-400">{onError}</p> : ''}
+      </span>
 
       <label htmlFor="location" className=" font-mono pt-8 pb-4">
         Place:
@@ -94,29 +92,53 @@ export default function ReportForm(props: Props) {
           setLocation(event.currentTarget.value);
         }}
         required
-        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
+        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
       />
 
       <label htmlFor="time" className="font-mono pt-8 pb-4">
-        Time:
+        Date:
       </label>
-      <input
-        id="time"
-        value={time}
-        onChange={(event) => {
-          setTime(event.currentTarget.value);
-        }}
-        required
-        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
-      />
+      <div className="flex bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700">
+        {time > formatDate(initialMaxTime.current) ? (
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              setTime(formatDate(decreaseDate(time)));
+            }}
+            className="w-1/4 font-bold"
+          >
+            {'<'}
+          </button>
+        ) : (
+          <span className="w-1/4" />
+        )}
+        <span className="bg-transparent autofill:bg-gray-700 text-center w-2/4">
+          {time}
+        </span>
+        {time === formatDate(initialTime.current) ? (
+          <span />
+        ) : (
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              setTime(formatDate(increaseDate(time)));
+            }}
+            className="w-1/4 font-bold"
+          >
+            {'>'}
+          </button>
+        )}
+      </div>
       <button
         className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800"
         formAction={async () => {
+          setLoading(true);
           await sightingHandler();
         }}
       >
         Send report
       </button>
+      <span>{loading ? 'Loading...' : ''}</span>
     </form>
   );
 }

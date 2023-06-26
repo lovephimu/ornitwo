@@ -1,6 +1,7 @@
 'use client';
 import { gql, useMutation } from '@apollo/client';
 import { Route } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { getSafeReturnToPath } from '../../../../util/validation';
@@ -35,40 +36,46 @@ export default function LoginForm(props: Props) {
   });
 
   return (
-    <form className="flex flex-col items-center font-sans font-extralight text-xl">
-      <label htmlFor="username" className="font-mono pt-8 pb-4">
-        Username:
-      </label>
-      <input
-        id="username"
-        value={username}
-        onChange={(event) => {
-          setUsername(event.currentTarget.value);
-        }}
-        required
-        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
-      />
-      <label htmlFor="password" className="font-mono pt-8 pb-4">
-        Password:
-      </label>
-      <input
-        id="password"
-        value={password}
-        onChange={(event) => {
-          setPassword(event.currentTarget.value);
-        }}
-        required
-        type="password"
-        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
-      />
-      <button
-        className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800"
-        formAction={async () => {
-          await loginHandler();
-        }}
-      >
-        Login
-      </button>
-    </form>
+    <section>
+      <form className="flex flex-col items-center font-sans font-extralight text-xl">
+        <label htmlFor="username" className="font-mono pt-8 pb-4">
+          Username:
+        </label>
+        <input
+          id="username"
+          value={username}
+          onChange={(event) => {
+            setUsername(event.currentTarget.value);
+          }}
+          required
+          className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
+        />
+        <label htmlFor="password" className="font-mono pt-8 pb-4">
+          Password:
+        </label>
+        <input
+          id="password"
+          value={password}
+          onChange={(event) => {
+            setPassword(event.currentTarget.value);
+          }}
+          required
+          type="password"
+          className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
+        />
+        <button
+          className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800"
+          formAction={async () => {
+            await loginHandler();
+          }}
+        >
+          Login
+        </button>
+        <p>{onError ? onError : ''}</p>
+      </form>
+      <section className="flex w-full justify-center font-mono p-8 text-xl">
+        <Link href={'/report/register' as Route}>or create new account</Link>
+      </section>
+    </section>
   );
 }
