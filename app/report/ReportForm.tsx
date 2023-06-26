@@ -2,6 +2,7 @@
 
 import { gql, useMutation } from '@apollo/client';
 import { Route } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { decreaseDate, increaseDate } from '../functions/changeDate';
@@ -105,9 +106,14 @@ export default function ReportForm(props: Props) {
               event.preventDefault();
               setTime(formatDate(decreaseDate(time)));
             }}
-            className="w-1/4 font-bold"
+            className="flex justify-center w-1/4 font-bold items-center"
           >
-            {'<'}
+            <Image
+              src="/images/icon_arrow.svg"
+              alt="select previous day"
+              width={20}
+              height={20}
+            />
           </button>
         ) : (
           <span className="w-1/4" />
@@ -123,9 +129,15 @@ export default function ReportForm(props: Props) {
               event.preventDefault();
               setTime(formatDate(increaseDate(time)));
             }}
-            className="w-1/4 font-bold"
+            className="flex justify-center w-1/4 font-bold items-center"
           >
-            {'>'}
+            <Image
+              src="/images/icon_arrow.svg"
+              alt="select following day"
+              width={20}
+              height={20}
+              className="rotate-180"
+            />
           </button>
         )}
       </div>
