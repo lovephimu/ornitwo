@@ -24,6 +24,7 @@ import {
   getUserByUsername,
   getUsers,
   getUserWithPasswordHashByUsername,
+  getValidSessionByToken,
 } from '../../../database/database';
 import { secureCookieOptions } from '../../../util/cookies';
 
@@ -31,6 +32,10 @@ import { secureCookieOptions } from '../../../util/cookies';
 
 type Token = {
   token: string;
+};
+
+type IsUserContext = {
+  isUser: { id: number; token: string } | null;
 };
 
 // SCHEMA GRAPHQL
@@ -276,7 +281,11 @@ const resolvers = {
         location: string;
         timeStamp: string;
       },
+      context: IsUserContext,
     ) => {
+      if (context.isUser === null) {
+        throw new GraphQLError('Unauthorized operation');
+      }
       const birdData = await getBirdIdByName(args.birdName);
 
       if (!birdData) {
@@ -336,7 +345,13 @@ const apolloServer = new ApolloServer({
 
 const handler = startServerAndCreateNextHandler<NextRequest>(apolloServer, {
   context: async (req) => {
-    return await { req };
+    const sessionToken = req.cookies.get('sessionToken');
+
+    const isUser = sessionToken
+      ? await getValidSessionByToken(sessionToken.value)
+      : null;
+
+    return await { req, isUser };
   },
 });
 

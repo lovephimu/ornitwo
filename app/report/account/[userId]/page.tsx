@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import { getValidSessionByToken } from '../../../../database/database';
 import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
 import LogoutButton from '../../../components/LogoutButton';
 import AccountData from './AccountData';
@@ -8,7 +7,7 @@ type Props = {
   params: { userId: string };
 };
 
-export default async function AccountPage(props: Props) {
+export default function AccountPage(props: Props) {
   // check for seesion cookie and pass to logout button
   const sessionTokenCookie = cookies().get('sessionToken');
 

@@ -5,9 +5,12 @@ import { Route } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
+import Autocomplete from 'react-google-autocomplete';
 import { decreaseDate, increaseDate } from '../functions/changeDate';
 import { formatDate } from '../functions/formatDate';
 import { makeMaxRange, makeTimeObject } from '../functions/makeTimeObject';
+
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
 const createSightingMutation = gql`
   mutation CreateSighting(
@@ -46,7 +49,6 @@ export default function ReportForm(props: Props) {
   const initialTime = useRef(currentTime);
   const maxTime = makeMaxRange(time);
   const initialMaxTime = useRef(maxTime);
-  console.log(initialMaxTime);
 
   const [sightingHandler] = useMutation(createSightingMutation, {
     variables: {
@@ -68,10 +70,11 @@ export default function ReportForm(props: Props) {
   return (
     <form className="flex flex-col items-center font-sans font-extralight text-xl">
       <label htmlFor="birdName" className="font-mono p-4">
-        Bird name (common name):
+        Bird name:
       </label>
       <input
         id="birdName"
+        placeholder="Enter common name"
         value={birdName}
         onChange={(event) => {
           setBirdName(event.currentTarget.value);
@@ -82,8 +85,7 @@ export default function ReportForm(props: Props) {
       <span>
         {onError ? <p className="pt-4 text-red-400">{onError}</p> : ''}
       </span>
-
-      <label htmlFor="location" className=" font-mono pt-8 pb-4">
+      {/* <label htmlFor="location" className=" font-mono pt-8 pb-4">
         Place:
       </label>
       <input
@@ -94,11 +96,29 @@ export default function ReportForm(props: Props) {
         }}
         required
         className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
+      /> */}
+      <span className=" font-mono pt-8 pb-4">Place:</span>
+      <Autocomplete
+        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
+        apiKey={apiKey}
+        options={{
+          types: ['geocode'],
+          componentRestrictions: { country: 'at' },
+          fields: ['address_components'],
+        }}
+        onPlaceSelected={(place) => {
+          console.log(place.address_components);
+          setLocation(
+            place.address_components[0].long_name +
+              ', ' +
+              place.address_components[2].long_name,
+          );
+        }}
       />
-
       <label htmlFor="time" className="font-mono pt-8 pb-4">
         Date:
       </label>
+
       <div className="flex bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700">
         {time > formatDate(initialMaxTime.current) ? (
           <button
@@ -151,6 +171,7 @@ export default function ReportForm(props: Props) {
         Send report
       </button>
       <span>{loading ? 'Loading...' : ''}</span>
+      <span>{!location ? 'location not set ' : 'location clear'}</span>
     </form>
   );
 }

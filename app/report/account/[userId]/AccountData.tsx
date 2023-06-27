@@ -40,7 +40,7 @@ type SortedUserSighting = {
 export type UserSightingResponse = {
   user: {
     username: string;
-    sightings: [UserSighting];
+    sightings: UserSighting[];
   };
 };
 

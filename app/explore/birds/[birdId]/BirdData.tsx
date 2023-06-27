@@ -18,7 +18,7 @@ type Props = {
 };
 
 export type SightingsByBirdResponse = {
-  sightingsByBird: [SightingByBird];
+  sightingsByBird: SightingByBird[];
 };
 
 export type SightingByBird = {

@@ -5,7 +5,6 @@ import {
   getUserBySessionToken,
   getValidSessionByToken,
 } from '../../database/database';
-import { getCookie } from '../../util/cookies';
 import AccountButton from '../components/AccountButton';
 import ExploreButtonSmall from '../components/ExploreButtonSmall';
 import ReportForm from './ReportForm';

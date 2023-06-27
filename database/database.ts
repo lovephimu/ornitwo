@@ -82,7 +82,7 @@ export const getUserById = cache(async (id: number) => {
 });
 
 export const getUserByUsername = cache(async (username: string) => {
-  const [user] = await sql<User[]>`
+  const [user] = await sql<UserWithoutSession[]>`
     SELECT id, username FROM users
     WHERE users.username = ${username.toLowerCase()}
   `;
@@ -103,7 +103,7 @@ export const getUserWithPasswordHashByUsername = cache(
 );
 
 export const getUserBySessionToken = cache(async (token: string) => {
-  const [user] = await sql<User[]>`
+  const [user] = await sql<UserWithoutSession[]>`
   SELECT
     users.id,
     users.username

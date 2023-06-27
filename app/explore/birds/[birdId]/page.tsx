@@ -2,7 +2,6 @@ import { cookies } from 'next/headers';
 import {
   getUserBySessionToken,
   getValidSessionByToken,
-  User,
 } from '../../../../database/database';
 import AccountButton from '../../../components/AccountButton';
 import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
