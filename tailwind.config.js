@@ -21,6 +21,15 @@ module.exports = {
           550: '#FBB159',
         },
       },
+      height: {
+        100: '30rem',
+        150: '44rem',
+        200: '200px',
+        500: '500px',
+      },
+      spacing: {
+        120: '120px',
+      },
     },
   },
   plugins: [require('autoprefixer')],

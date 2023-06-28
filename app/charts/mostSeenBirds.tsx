@@ -1,6 +1,7 @@
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
+import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
 import { extractAndSortBirds } from '../functions/extractAndSortBirds';
 import { UserSightingResponse } from '../report/account/[userId]/AccountData';
 
@@ -15,7 +16,7 @@ export default function MostSeenBirdsDoughnut(props: Props) {
 
   const chartData = {
     labels: inputData.map((item) => {
-      return item.birdName;
+      return capitalizeFirstLetter(item.birdName);
     }),
     datasets: [
       {
@@ -31,7 +32,7 @@ export default function MostSeenBirdsDoughnut(props: Props) {
   };
 
   return (
-    <div>
+    <div className="flex w-full justify-center h-96">
       <Doughnut
         data={chartData}
         options={{
@@ -44,6 +45,9 @@ export default function MostSeenBirdsDoughnut(props: Props) {
               display: true,
               labels: {
                 color: '#FBB159',
+                font: {
+                  size: 16,
+                },
               },
             },
           },

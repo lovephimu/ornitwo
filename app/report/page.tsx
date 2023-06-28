@@ -33,8 +33,9 @@ export default async function ReportPage() {
         <ExploreButtonSmall />
         <AccountButton userId={user?.id} />
       </section>
-      <section className="flex flex-col flex-grow w-full bg-gray-775">
-        <div className="flex justify-center w-full pt-12 pb-6">
+      <section className="flex flex-col flex-grow items-center w-full ">
+        <h1 className="font-serif font-semibold text-6xl">orniTwo</h1>
+        <div className="flex justify-center w-full pt-4 pb-6">
           <Image
             src="/images/icon_report.svg"
             height={40}

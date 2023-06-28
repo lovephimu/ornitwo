@@ -81,7 +81,7 @@ export default function BirdData(props: Props) {
       </section>
       <section className="flex flex-col w-full bg-gray-750 items-center p-8">
         <h2 className="font-mono text-2xl">Average spottings:</h2>
-        <div className="pt-8 w-full justify-center">
+        <div className="flex pt-8 w-full justify-center">
           <MonthSum data={data} />
         </div>
       </section>

@@ -68,7 +68,7 @@ export default function ReportForm(props: Props) {
   });
 
   return (
-    <form className="flex flex-col items-center font-sans font-extralight text-xl">
+    <form className="flex flex-col flex-grow items-center font-sans font-extralight text-xl w-full bg-gray-775">
       <label htmlFor="birdName" className="font-mono p-4">
         Bird name:
       </label>
@@ -104,10 +104,13 @@ export default function ReportForm(props: Props) {
         options={{
           types: ['geocode'],
           componentRestrictions: { country: 'at' },
-          fields: ['address_components'],
+          fields: ['address_components', 'geometry'],
         }}
         onPlaceSelected={(place) => {
-          console.log(place.address_components);
+          const lat = place.geometry.location.lat();
+          const lng = place.geometry.location.lng();
+          console.log('Latitude:', lat);
+          console.log('Longitude:', lng);
           setLocation(
             place.address_components[0].long_name +
               ', ' +
