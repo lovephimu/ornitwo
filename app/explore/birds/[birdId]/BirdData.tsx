@@ -126,7 +126,9 @@ export default function BirdData(props: Props) {
       <section className="flex justify-center w-full">
         <h2 className="font-mono text-2xl ">Last seen at:</h2>
       </section>
-      <SightingMap />
+      <section className="flex justify-center">
+        <SightingMap />
+      </section>
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ExploreButton />
         <ReportButton />
