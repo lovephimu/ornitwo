@@ -7,6 +7,7 @@ export type User = {
   id: number;
   username: string;
   passwordHash: string;
+  userPic: string;
 };
 
 export type UserWithPasswordHash = User & {
@@ -18,10 +19,17 @@ export type UserWithoutSession = {
   username: string;
 };
 
+export type UserWithPic = {
+  id: number;
+  username: string;
+  userPic: string;
+};
+
 export type Bird = {
   id: number;
   name: string;
   species: string;
+  bio: string;
 };
 
 export type Sighting = {
@@ -30,6 +38,8 @@ export type Sighting = {
   birdId: number;
   location: string;
   timeStamp: string;
+  lat: number;
+  lng: number;
 };
 
 export type Session = {
@@ -134,6 +144,16 @@ export const createUser = cache(
   },
 );
 
+export const changeUserPic = cache(async (id: number, userPic: string) => {
+  const [user] = await sql<UserWithPic[]>`
+  UPDATE users
+  SET user_pic = ${userPic}
+  WHERE id = ${id}
+  RETURNING id, username, user_pic
+  `;
+  return user;
+});
+
 // GET SIGHTING METHODS
 
 export const getSightings = cache(async () => {
@@ -175,12 +195,14 @@ export const createSightingReport = cache(
     birdId: number,
     location: string,
     timeStamp: string,
+    lat: number,
+    lng: number,
   ) => {
     const [sighting] = await sql<Sighting[]>`
   INSERT INTO sightings
-  (user_id, bird_id, location, time_stamp)
-  VALUES (${userId}, ${birdId}, ${location}, ${timeStamp})
-  RETURNING id, user_id, bird_id, location, time_stamp
+  (user_id, bird_id, location, time_stamp, lat, lng)
+  VALUES (${userId}, ${birdId}, ${location}, ${timeStamp}, ${lat},${lng})
+  RETURNING id, user_id, bird_id, location, time_stamp, lat, lng
   `;
     return sighting;
   },

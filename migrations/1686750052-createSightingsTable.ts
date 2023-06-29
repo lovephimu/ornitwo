@@ -11,7 +11,9 @@ export async function up(sql: Sql) {
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (bird_id) REFERENCES birds (id),
     location text,
-    time_stamp text
+    time_stamp text,
+    lat NUMERIC,
+    lng NUMERIC
   )
   `;
 }

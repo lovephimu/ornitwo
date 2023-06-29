@@ -2,6 +2,7 @@
 
 import { gql, useQuery } from '@apollo/client';
 import { Route } from 'next';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import MonthSum from '../../../charts/monthSumSchema';
@@ -12,6 +13,11 @@ import { capitalizeFirstLetter } from '../../../functions/capitalizeFirstLetter'
 import { capitalizeFirstLetterOnly } from '../../../functions/capitalizeFirstLetterOnly';
 import { formatDate } from '../../../functions/formatDate';
 import { sortBirdSightingsByDate } from '../../../functions/sortBirdSightingByDate';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const SightingMap = dynamic(() => import('../../../components/SightingMap'), {
+  ssr: false,
+});
 
 type Props = {
   birdId: string;
@@ -43,6 +49,7 @@ const sightingsQuery = gql`
         username
       }
       location
+      id
       timeStamp
       birdData {
         name
@@ -64,7 +71,7 @@ export default function BirdData(props: Props) {
     return <LoadingStatement />;
   }
   return (
-    <section>
+    <section className="w-full">
       <section className="flex flex-col w-full bg-gray-775 items-center">
         <h1 className="font-serif font-semibold text-5xl pt-8">
           {capitalizeFirstLetter(data.sightingsByBird[0].birdData.name)}
@@ -116,6 +123,10 @@ export default function BirdData(props: Props) {
           })}
         </div>
       </section>
+      <section className="flex justify-center w-full">
+        <h2 className="font-mono text-2xl ">Last seen at:</h2>
+      </section>
+      <SightingMap />
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ExploreButton />
         <ReportButton />

@@ -8,6 +8,35 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 30px #586780 inset;
 }
 
+.leaflet-container {
+  height: 300px;
+}
+
+.leaflet-container .leaflet-tile {
+  filter: invert(0.9) brightness(100%) saturate(0%) sepia(80%)
+    hue-rotate(180deg) contrast(120%);
+}
+.map-container {
+  background-color: #1f2937;
+}
+
+.leaflet-control {
+  background-color: #1f2937;
+  color: #1f2937;
+  border: none;
+}
+
+.leaflet-control-zoom a:link,
+.leaflet-control-zoom a:visited {
+  color: #fbb159;
+  background-color: #1f2937;
+  border: 0px;
+}
+
+.leaflet-control-attribution {
+  background-color: none;
+}
+
 /* :root {
   --max-width: 1100px;
   --border-radius: 12px;

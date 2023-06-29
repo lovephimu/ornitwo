@@ -72,6 +72,8 @@ const typeDefs = gql`
       birdName: String!
       location: String
       timeStamp: String
+      lat: Float
+      lng: Float
     ): Sighting
   }
   type Bird {
@@ -81,6 +83,8 @@ const typeDefs = gql`
     name: String!
     "The bird's scientific name"
     species: String
+    "Short description"
+    bio: String
   }
 
   type User {
@@ -92,6 +96,8 @@ const typeDefs = gql`
     passwordHash: String
     "Sightings by user"
     sightings: [Sighting]
+    "Individual user pic"
+    userPic: String
   }
 
   type Sighting {
@@ -109,6 +115,10 @@ const typeDefs = gql`
     birdData: Bird
     "Related User"
     userData: User
+    "Latitude"
+    lat: Float
+    "Longitude"
+    lng: Float
   }
 
   type Token {
@@ -280,6 +290,8 @@ const resolvers = {
         birdName: string;
         location: string;
         timeStamp: string;
+        lat: number;
+        lng: number;
       },
       context: IsUserContext,
     ) => {
@@ -297,6 +309,8 @@ const resolvers = {
         birdData.id,
         args.location,
         args.timeStamp,
+        args.lat,
+        args.lng,
       );
 
       await cookies().set({
@@ -320,7 +334,6 @@ const resolvers = {
   Sighting: {
     birdData: async (parent: { birdId: number }) => {
       const birdData = await getBirdById(parent.birdId);
-      // console.log(birdData?.name + 'from query');
       return birdData;
     },
     userData: async (parent: { userId: number }) => {
