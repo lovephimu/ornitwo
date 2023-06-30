@@ -4,7 +4,7 @@ export async function up(sql: Sql) {
   await sql`
   CREATE TABLE birds (
     id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name varchar(30) NOT NULL,
+    name varchar(50) NOT NULL,
     species varchar(100),
     bio varchar
   )

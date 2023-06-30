@@ -3,13 +3,23 @@ import { Bird } from '../database/database';
 
 export const birds: Bird[] = [
   { id: 1, name: 'house sparrow', species: 'passer domesticus', bio: '' },
-  { id: 2, name: 'kestrel', species: 'falco tinnunculus', bio: '' },
-  { id: 3, name: 'wagtail', species: 'motacilla alba', bio: '' },
+  {
+    id: 2,
+    name: 'eurasian tree sparrow',
+    species: 'passer montanus',
+    bio: 'never alone',
+  },
+  {
+    id: 3,
+    name: 'nightingale',
+    species: 'luscinia megarynchos',
+    bio: 'a legendary bird',
+  },
   {
     id: 4,
-    name: 'stork',
-    species: 'ciconia ciconia',
-    bio: '',
+    name: 'great spotted woodpecker',
+    species: 'dendrocopos major',
+    bio: 'facade pecker',
   },
 ];
 

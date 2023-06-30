@@ -1,7 +1,9 @@
 'use client';
 
 import { gql, useQuery } from '@apollo/client';
+import { Route } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import TopTenUsers from '../charts/topTenUsers';
 import LoadingStatement from '../components/LoadingStatement';
 import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
@@ -79,9 +81,13 @@ export default function Statistics() {
                 <span className="font-serif text-base pr-4">st</span>
               </div>
               <div>
-                <p className="text-xl font-mono">
-                  {capitalizeFirstLetter(birdRanking[0]!.birdName)}
-                </p>
+                <Link
+                  href={`/explore/birds/${birdRanking[0]!.birdId}` as Route}
+                >
+                  <p className="text-xl font-mono">
+                    {capitalizeFirstLetter(birdRanking[0]!.birdName)}
+                  </p>
+                </Link>
                 <p className="text-base">
                   {capitalizeFirstLetterOnly(birdRanking[0]!.species)}
                 </p>
@@ -98,9 +104,13 @@ export default function Statistics() {
             </div>
             <div className="flex items-center pt-2">
               <div>
-                <p className="text-base font-mono text-right">
-                  {capitalizeFirstLetter(birdRanking[1]!.birdName)}
-                </p>
+                <Link
+                  href={`/explore/birds/${birdRanking[1]!.birdId}` as Route}
+                >
+                  <p className="text-base font-mono text-right">
+                    {capitalizeFirstLetter(birdRanking[1]!.birdName)}
+                  </p>
+                </Link>
                 <p className="text-sm text-right">
                   {capitalizeFirstLetterOnly(birdRanking[1]!.species)}
                 </p>
@@ -125,9 +135,13 @@ export default function Statistics() {
                 <span className="font-serif text-sm pr-4">rd</span>
               </div>
               <div>
-                <p className="text-base font-mono">
-                  {capitalizeFirstLetter(birdRanking[2]!.birdName)}
-                </p>
+                <Link
+                  href={`/explore/birds/${birdRanking[2]!.birdId}` as Route}
+                >
+                  <p className="text-base font-mono">
+                    {capitalizeFirstLetter(birdRanking[2]!.birdName)}
+                  </p>
+                </Link>
                 <p className="text-sm">
                   {capitalizeFirstLetterOnly(birdRanking[2]!.species)}
                 </p>

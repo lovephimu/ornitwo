@@ -103,45 +103,66 @@ export default function AccountData(props: Props) {
           </div>
         </div>
       </section>
-      <section className="flex flex-col w-full bg-gray-800 items-center p-8">
-        <h2 className="font-mono text-2xl ">Most spotted birds:</h2>
-        <div className="flex justify-center w-full p-8">
-          <MostSeenBirdsDoughnut data={data} />
-        </div>
-      </section>
-      <section className="flex flex-col flex-grow w-full bg-gray-775 p-8 items-center">
-        <h2 className="font-mono text-2xl pb-8 ">Last sightings:</h2>
-        <div className="flex w-full justify-between font-mono font-light text-xl border-b border-dotted border-yellow-550">
-          <span className="flex flex-grow">I saw a...</span>
-          <span className="flex justify-end">...on, at:</span>
-        </div>
-        {sortUserSightingsByDate(data).map((sighting: SortedUserSighting) => {
-          return (
-            <div
-              key={`sightingId ${sighting.id}`}
-              className="w-full pt-4 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
-            >
-              <div className="flex w-full text-xl">
-                <span className="flex flex-grow font-bold w-1/4">
-                  <Link href={`/explore/birds/${sighting.birdId}` as Route}>
-                    {capitalizeFirstLetter(sighting.name)}
-                  </Link>
-                </span>
-                <span className="flex text-right justify-end w-1/6 font-bold">
-                  {formatDate(sighting.time)}
-                </span>
-              </div>
-              <div className="flex w-full pt-2 pb-2">
-                <span className="flex flex-grow w-1/4 italic">
-                  {capitalizeFirstLetterOnly(sighting.species)}
-                </span>
-                <span className="flex flex-grow" />
-                <span className="w-1/2 text-right">{sighting.location} </span>
-              </div>
+      {!data.user.sightings[0] ? (
+        <section>
+          <div className="flex flex-col w-full justify-center items-center font-mono py-8 h-80">
+            <h2 className="font-mono text-2xl">To soon!</h2>
+            <p className="p-8 text-center">
+              {capitalizeFirstLetter(data.user.username)} has not yet posted any
+              reports.
+            </p>
+          </div>
+        </section>
+      ) : (
+        <>
+          <section className="flex flex-col w-full bg-gray-800 items-center p-8">
+            <h2 className="font-mono text-2xl ">Most spotted birds:</h2>
+            <div className="flex justify-center w-full p-8">
+              <MostSeenBirdsDoughnut data={data} />
             </div>
-          );
-        })}
-      </section>
+          </section>
+          <section className="flex flex-col flex-grow w-full bg-gray-775 p-8 items-center">
+            <h2 className="font-mono text-2xl pb-8 ">Last sightings:</h2>
+            <div className="flex w-full justify-between font-mono font-light text-xl border-b border-dotted border-yellow-550">
+              <span className="flex flex-grow">I saw a...</span>
+              <span className="flex justify-end">...on, at:</span>
+            </div>
+            {sortUserSightingsByDate(data).map(
+              (sighting: SortedUserSighting) => {
+                return (
+                  <div
+                    key={`sightingId ${sighting.id}`}
+                    className="w-full pt-4 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
+                  >
+                    <div className="flex w-full text-xl">
+                      <span className="flex flex-grow font-bold w-1/4">
+                        <Link
+                          href={`/explore/birds/${sighting.birdId}` as Route}
+                        >
+                          {capitalizeFirstLetter(sighting.name)}
+                        </Link>
+                      </span>
+                      <span className="flex text-right justify-end w-1/6 font-bold">
+                        {formatDate(sighting.time)}
+                      </span>
+                    </div>
+                    <div className="flex w-full pt-2 pb-2">
+                      <span className="flex flex-grow w-1/4 italic">
+                        {capitalizeFirstLetterOnly(sighting.species)}
+                      </span>
+                      <span className="flex flex-grow" />
+                      <span className="w-1/2 text-right">
+                        {sighting.location}{' '}
+                      </span>
+                    </div>
+                  </div>
+                );
+              },
+            )}
+          </section>
+        </>
+      )}
+
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ExploreButton />
         <ReportButton />

@@ -4,14 +4,28 @@ import 'leaflet/dist/leaflet.css';
 import { Icon, LatLngTuple } from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
-export default function SightingMap() {
+type sortedData = {
+  id: number;
+  userId: number;
+  username: string;
+  location: string;
+  time: Date;
+  lat: number;
+  lng: number;
+};
+
+type Props = {
+  coordinates: sortedData[];
+};
+
+export default function SightingMap(props: Props) {
   const center: [number, number] = [47.525, 14.183];
 
-  const markers = [
-    { id: 1, position: [48.2082, 16.3738], name: 'Vienna' },
-    { id: 2, position: [47.8095, 13.055], name: 'Salzburg' },
-    { id: 3, position: [47.2692, 11.4041], name: 'Innsbruck' },
-  ];
+  const markers = props.coordinates;
+
+  if (markers.length === 0) {
+    return <p>No coordinates provided.</p>;
+  }
 
   return (
     <section className="p-8">
@@ -30,9 +44,9 @@ export default function SightingMap() {
               })
             }
             key={`markerId-${marker.id}`}
-            position={marker.position as LatLngTuple}
+            position={[marker.lat, marker.lng] as LatLngTuple}
           >
-            <Popup>{marker.name}</Popup>
+            <Popup>{marker.location}</Popup>
           </Marker>
         ))}
       </MapContainer>

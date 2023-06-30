@@ -21,6 +21,8 @@ export function sortBirdSightingsByDate(
         username: sighting.userData.username,
         location: sighting.location,
         time: timeObject,
+        lat: sighting.lat,
+        lng: sighting.lng,
       };
     });
 

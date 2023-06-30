@@ -4,7 +4,7 @@ import { gql, useMutation } from '@apollo/client';
 import { Route } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import { decreaseDate, increaseDate } from '../functions/changeDate';
 import { formatDate } from '../functions/formatDate';
@@ -18,12 +18,16 @@ const createSightingMutation = gql`
     $birdName: String!
     $location: String
     $timeStamp: String
+    $lat: Float
+    $lng: Float
   ) {
     createSighting(
       userId: $userId
       birdName: $birdName
       location: $location
       timeStamp: $timeStamp
+      lat: $lat
+      lng: $lng
     ) {
       birdId
       location
@@ -43,6 +47,14 @@ export default function ReportForm(props: Props) {
   const [time, setTime] = useState(formatDate(new Date()));
   const [onError, setOnError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
+
+  useEffect(() => {
+    console.log('Updated Latitude:', lat);
+    console.log('Updated Longitude:', lng);
+    console.log('Updated Location:', location);
+  }, [lat, lng, location]);
 
   const router = useRouter();
   const currentTime = new Date(makeTimeObject(time));
@@ -56,6 +68,8 @@ export default function ReportForm(props: Props) {
       birdName: birdName.toLowerCase(),
       location: location,
       timeStamp: time,
+      lat: lat,
+      lng: lng,
     },
     onError: (error) => {
       setOnError(error.message);
@@ -68,7 +82,7 @@ export default function ReportForm(props: Props) {
   });
 
   return (
-    <form className="flex flex-col flex-grow items-center font-sans font-extralight text-xl w-full bg-gray-775">
+    <form className="flex flex-col flex-grow items-center font-sans font-extralight text-xl w-full bg-gray-775 pt-8">
       <label htmlFor="birdName" className="font-mono p-4">
         Bird name:
       </label>
@@ -107,10 +121,10 @@ export default function ReportForm(props: Props) {
           fields: ['address_components', 'geometry'],
         }}
         onPlaceSelected={(place) => {
-          const lat = place.geometry.location.lat();
-          const lng = place.geometry.location.lng();
-          console.log('Latitude:', lat);
-          console.log('Longitude:', lng);
+          const lati = place.geometry.location.lat();
+          const long = place.geometry.location.lng();
+          setLat(lati);
+          setLng(long);
           setLocation(
             place.address_components[0].long_name +
               ', ' +
