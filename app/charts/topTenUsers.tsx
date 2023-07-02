@@ -26,15 +26,10 @@ export default function TopTenUsers(props: Props) {
         }),
         backgroundColor: [
           '#FBB159FF',
-          '#FBB159E6',
           '#FBB159CC',
-          '#FBB159B3',
           '#FBB15999',
-          '#FBB15980',
           '#FBB15966',
-          '#FBB1594D',
           '#FBB15933',
-          '#FBB1591A',
         ],
         borderWidth: 2,
         borderColor: '#FBB159',
@@ -43,7 +38,7 @@ export default function TopTenUsers(props: Props) {
   };
 
   return (
-    <div className="w-full h-72">
+    <div className="flex justify-center w-full h-72 md:h-32">
       <Bar
         data={chartData}
         options={{

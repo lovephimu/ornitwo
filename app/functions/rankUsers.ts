@@ -18,7 +18,7 @@ export function rankUsers(dataInput: ExploreQuery) {
 
   const userRank = userCount.sort((a, b) => b.count - a.count);
 
-  const rankedUser = userRank.slice(0, 10).map((user) => {
+  const rankedUser = userRank.slice(0, 5).map((user) => {
     const matchedUser = userArray.find(
       (userItem) => userItem.username === user.user,
     );

@@ -3,6 +3,7 @@
 import { gql, useMutation } from '@apollo/client';
 import { Route } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Autocomplete from 'react-google-autocomplete';
@@ -46,7 +47,7 @@ export default function ReportForm(props: Props) {
   const [location, setLocation] = useState('');
   const [time, setTime] = useState(formatDate(new Date()));
   const [onError, setOnError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [locationError, setLocationError] = useState(false);
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
 
@@ -73,7 +74,7 @@ export default function ReportForm(props: Props) {
     },
     onError: (error) => {
       setOnError(error.message);
-      setLoading(false);
+      setLocationError(false);
     },
     onCompleted: () => {
       router.refresh();
@@ -81,8 +82,26 @@ export default function ReportForm(props: Props) {
     },
   });
 
+  console.log(time);
+  console.log(currentTime);
+  console.log(maxTime);
+  console.log(initialMaxTime.current);
+  console.log(formatDate(initialMaxTime.current));
+
   return (
     <form className="flex flex-col flex-grow items-center font-sans font-extralight text-xl w-full bg-gray-775 pt-8">
+      <section>
+        <div className="hidden md:flex justify-center w-full pt-4 pb-6 font-normal">
+          <Image
+            src="/images/icon_report.svg"
+            height={40}
+            width={40}
+            alt="Report icon"
+            className="pr-4"
+          />
+          <h2 className="font-mono text-2xl">Report</h2>
+        </div>
+      </section>
       <label htmlFor="birdName" className="font-mono p-4">
         Bird name:
       </label>
@@ -92,12 +111,43 @@ export default function ReportForm(props: Props) {
         value={birdName}
         onChange={(event) => {
           setBirdName(event.currentTarget.value);
+          setOnError('');
         }}
         required
         className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
       />
       <span>
-        {onError ? <p className="pt-4 text-red-400">{onError}</p> : ''}
+        {onError ? (
+          <p className="pt-4 text-red-400 text-sm h-8">
+            {onError}{' '}
+            <Link href={'/explore/birdlist' as Route}>See bird list.</Link>
+          </p>
+        ) : (
+          ''
+        )}
+      </span>
+      <span className="text-sm pt-2">
+        {!birdName ? (
+          <div className="flex items-center text-black">
+            <div className="flex items-center h-8 pr-2" />
+          </div>
+        ) : onError ? (
+          <div className="flex items-center text-black">
+            <div className="flex items-center pr-2" />
+          </div>
+        ) : (
+          <div className="flex items-center">
+            <div className="flex items-center h-8 pr-2">
+              <Image
+                alt="unchecked"
+                src="/images/icon_check.svg"
+                height={15}
+                width={15}
+              />
+            </div>
+            <div className="flex items-start text-sm h-8 pt-2">Bird set!</div>
+          </div>
+        )}
       </span>
       {/* <label htmlFor="location" className=" font-mono pt-8 pb-4">
         Place:
@@ -111,7 +161,7 @@ export default function ReportForm(props: Props) {
         required
         className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
       /> */}
-      <span className=" font-mono pt-8 pb-4">Place:</span>
+      <span className=" font-mono pt-4 pb-4">Place:</span>
       <Autocomplete
         className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
         apiKey={apiKey}
@@ -130,14 +180,45 @@ export default function ReportForm(props: Props) {
               ', ' +
               place.address_components[2].long_name,
           );
+          setLocationError(false);
         }}
       />
-      <label htmlFor="time" className="font-mono pt-8 pb-4">
+      <span>
+        {locationError ? (
+          <p className="pt-4 text-red-400 text-sm h-8">Location not set!</p>
+        ) : (
+          ''
+        )}
+      </span>
+      <span className="text-sm pt-2">
+        {!location && !locationError ? (
+          <div className="flex items-center text-black">
+            <div className="flex items-center h-8 pr-2" />
+          </div>
+        ) : locationError ? (
+          <span />
+        ) : (
+          <div className="flex items-center">
+            <div className="flex items-center h-8 pr-2">
+              <Image
+                alt="unchecked"
+                src="/images/icon_check.svg"
+                height={15}
+                width={15}
+              />
+            </div>
+            <div className="flex items-start text-sm h-8 pt-2">
+              Location set!
+            </div>
+          </div>
+        )}
+      </span>
+      <label htmlFor="time" className="font-mono pt-4 pb-4">
         Date:
       </label>
 
       <div className="flex bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700">
-        {time > formatDate(initialMaxTime.current) ? (
+        {makeTimeObject(time) > initialMaxTime.current ? (
           <button
             onClick={(event) => {
               event.preventDefault();
@@ -178,17 +259,16 @@ export default function ReportForm(props: Props) {
           </button>
         )}
       </div>
+
       <button
         className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800"
         formAction={async () => {
-          setLoading(true);
-          await sightingHandler();
+          setLocationError(true);
+          location ? await sightingHandler() : setLocationError(true);
         }}
       >
         Send report
       </button>
-      <span>{loading ? 'Loading...' : ''}</span>
-      <span>{!location ? 'location not set ' : 'location clear'}</span>
     </form>
   );
 }

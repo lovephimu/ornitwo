@@ -27,6 +27,20 @@ module.exports = {
         200: '200px',
         500: '500px',
       },
+      width: {
+        100: '30rem',
+        120: '35rem',
+        150: '44rem',
+        200: '60rem',
+        500: '500px',
+      },
+      minWidth: {
+        120: '35rem',
+      },
+      maxWidth: {
+        120: '35rem',
+        150: '40rem',
+      },
       spacing: {
         120: '120px',
       },

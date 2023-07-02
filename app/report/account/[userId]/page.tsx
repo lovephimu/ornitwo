@@ -16,7 +16,13 @@ export default function AccountPage(props: Props) {
   return (
     <main className="flex flex-col w-full items-center h-screen">
       <section className="flex items-center w-full p-8 justify-between font-extralight">
-        <LogoutButton token={token} />
+        <div className="hidden md:block ">
+          <span className="font-serif font-semibold text-3xl">orniTwo</span>
+          <span className="font-mono text-2xl font-normal"> : Explore</span>
+        </div>
+        <div className="md:pr-8 md:ml-auto">
+          <LogoutButton token={token} />
+        </div>
         <ExploreButtonSmall />
       </section>
       <AccountData userId={props.params.userId} />

@@ -30,10 +30,16 @@ export default async function ReportPage() {
   return (
     <main className="flex flex-col w-full items-center h-screen">
       <section className="flex items-center w-full p-8 justify-between font-extralight">
-        <ExploreButtonSmall />
+        <div className="hidden md:block ">
+          <span className="font-serif font-semibold text-3xl">orniTwo</span>
+          <span className="font-mono text-2xl font-normal"> : Report</span>
+        </div>
+        <div className="md:pr-8 md:ml-auto">
+          <ExploreButtonSmall />
+        </div>
         <AccountButton userId={user?.id} />
       </section>
-      <section className="flex flex-col flex-grow items-center w-full ">
+      <section className="flex flex-col items-center w-full md:hidden">
         <h1 className="font-serif font-semibold text-6xl">orniTwo</h1>
         <div className="flex justify-center w-full pt-4 pb-6">
           <Image
@@ -45,7 +51,11 @@ export default async function ReportPage() {
           />
           <h2 className="font-mono text-2xl">Report</h2>
         </div>
-        <ReportForm matchingUserId={user!.id} />
+      </section>
+      <section className="flex flex-grow w-full bg-gray-775 justify-center">
+        <section className="w-full md:w-200">
+          <ReportForm matchingUserId={user!.id} />
+        </section>
       </section>
     </main>
   );

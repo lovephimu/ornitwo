@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { Icon, LatLngTuple } from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
-type sortedData = {
+type SortedData = {
   id: number;
   userId: number;
   username: string;
@@ -15,7 +15,7 @@ type sortedData = {
 };
 
 type Props = {
-  coordinates: sortedData[];
+  coordinates: SortedData[];
 };
 
 export default function SightingMap(props: Props) {

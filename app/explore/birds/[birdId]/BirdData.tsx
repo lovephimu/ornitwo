@@ -83,9 +83,14 @@ export default function BirdData(props: Props) {
   const sortedBirdsArray = sortBirdSightingsByDate(data);
 
   return (
-    <section className="w-full">
-      <section className="flex flex-col w-full bg-gray-775 items-center">
-        <h1 className="font-serif font-semibold text-5xl pt-8 text-center">
+    <section className="flex flex-col w-full">
+      <section className="flex flex-col  w-full bg-gray-775 items-center">
+        <section className="flex flex-col w-full bg-gray-775">
+          <div className="flex flex-col justify-center items-center w-full pt-12">
+            <h2 className="font-mono text-2xl">Bird profile</h2>
+          </div>
+        </section>
+        <h1 className="font-serif font-semibold text-5xl pt-8 text-center px-8">
           {capitalizeFirstLetter(data.bird.name)}
         </h1>
         <h2 className="text-2xl py-4">
@@ -116,15 +121,15 @@ export default function BirdData(props: Props) {
           </p>
         </div>
       ) : (
-        <>
-          <section className="flex flex-col w-full bg-gray-750 items-center p-8">
+        <section className="md:flex md:flex-row md:w-full">
+          <section className="flex flex-col w-full bg-gray-750 items-center p-8 md:bg-gray-800 md:w-1/3">
             <h2 className="font-mono text-2xl">Average spottings:</h2>
 
             <div className="flex pt-8 w-full justify-center">
               <MonthSum data={data} />
             </div>
           </section>
-          <section className="flex flex-col w-full bg-gray-800 items-center p-8">
+          <section className="flex flex-col w-full bg-gray-800 items-center p-8 md:w-1/3">
             <h2 className="font-mono text-2xl pb-8 ">Last seen by:</h2>
 
             <div className="pb-8 w-full">
@@ -158,15 +163,16 @@ export default function BirdData(props: Props) {
               })}
             </div>
           </section>
-          <section className="flex justify-center w-full">
+          {/* <section className="flex p-8 justify-center w-full">
             <h2 className="font-mono text-2xl ">Last seen at:</h2>
-          </section>
-          <section className="pb-8">
+          </section> */}
+          <section className="text-center pb-8 md:w-1/3">
+            <h2 className="font-mono text-2xl pt-8">Last seen at:</h2>
             <SightingMap coordinates={sortedBirdsArray} />
           </section>
-        </>
+        </section>
       )}
-      <section className="flex flex-col self-start w-full h-60 text-3xl">
+      <section className="md:hidden flex flex-col self-start w-full h-60 text-3xl">
         <ExploreButton />
         <ReportButton />
       </section>

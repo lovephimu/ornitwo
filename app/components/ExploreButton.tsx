@@ -7,7 +7,7 @@ export default function ExploreButton() {
   const router = useRouter();
 
   return (
-    <div className="flex font-mono font-light bg-gray-775 w-full justify-center h-32 items-center">
+    <div className="flex font-mono font-light bg-gray-775 w-full justify-center h-32 items-center md:hidden">
       <button
         onClick={() => {
           router.refresh();
