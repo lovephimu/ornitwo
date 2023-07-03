@@ -89,7 +89,7 @@ export default function Summary(props: Props) {
               {capitalizeFirstLetterOnly(data.sighting.birdData.species)}
             </p>
             <p className="pt-8 pb-4 font-light">Location:</p>
-            <div className="flex w-full justify-center">
+            <div className="flex w-full px-8 justify-center">
               <div>
                 <Image
                   src="/images/icon_map_marker.svg"

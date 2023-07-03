@@ -208,6 +208,14 @@ export const createSightingReport = cache(
   },
 );
 
+export const deleteSightingById = cache(async (id: number) => {
+  const [sighting] = await sql<{ id: number }[]>`
+  DELETE from sightings WHERE sightings.id = ${id}
+  RETURNING id
+  `;
+  return sighting;
+});
+
 // Sessions
 
 export const deleteExpiredSessions = cache(async () => {

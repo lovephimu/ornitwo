@@ -13,6 +13,7 @@ import {
   createSightingReport,
   createUser,
   deleteSessionByToken,
+  deleteSightingById,
   getBirdById,
   getBirdIdByName,
   getBirds,
@@ -75,6 +76,7 @@ const typeDefs = gql`
       lat: Float
       lng: Float
     ): Sighting
+    deleteSightingById(id: ID!): Sighting
   }
   type Bird {
     "The bird's ID"
@@ -320,6 +322,21 @@ const resolvers = {
       });
 
       return newSighting;
+    },
+    deleteSightingById: async (
+      parent: null,
+      args: {
+        id: number;
+      },
+      context: IsUserContext,
+    ) => {
+      if (context.isUser === null) {
+        throw new GraphQLError('Unauthorized operation');
+      }
+
+      const deleteSighting = await deleteSightingById(args.id);
+
+      return deleteSighting;
     },
   },
 

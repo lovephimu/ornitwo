@@ -1,9 +1,11 @@
 'use client';
 
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import MostSeenBirdsDoughnut from '../../../charts/mostSeenBirds';
 import ExploreButton from '../../../components/ExploreButton';
 import LoadingStatement from '../../../components/LoadingStatement';
@@ -15,6 +17,7 @@ import { sortUserSightingsByDate } from '../../../functions/sortUserSightingsByD
 
 type Props = {
   userId: string;
+  isOwner: boolean;
 };
 
 type SortedUserSighting = {
@@ -62,10 +65,33 @@ const userQuery = gql`
   }
 `;
 
+const deleteSightingMutation = gql`
+  mutation DeleteMutation($deleteSightingByIdId: ID!) {
+    deleteSightingById(id: $deleteSightingByIdId) {
+      id
+    }
+  }
+`;
+
+export const dynamic = 'force-dynamic';
+
 export default function AccountData(props: Props) {
-  const { loading, error, data } = useQuery(userQuery, {
+  const router = useRouter();
+  const [deleteId, setDeleteId] = useState('');
+  const [isToBeDeleted, setIsToBeDeleted] = useState(false);
+  const [deleteContent, setDeleteContent] = useState('');
+
+  const { loading, error, data, refetch } = useQuery(userQuery, {
     variables: { userId: props.userId },
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
+  });
+
+  const [deleteHandler] = useMutation(deleteSightingMutation, {
+    variables: { deleteSightingByIdId: deleteId },
+    onCompleted: async () => {
+      router.refresh();
+      await refetch();
+    },
   });
   if (error) {
     console.log(error.message);
@@ -94,7 +120,7 @@ export default function AccountData(props: Props) {
           </div>
         </section>
         {!data.user.sightings[0] ? (
-          <section>
+          <section className="md:w-2/3">
             <div className="flex flex-col w-full justify-center items-center font-mono py-8 h-80">
               <h2 className="font-mono text-2xl">To soon!</h2>
               <p className="p-8 text-center">
@@ -117,40 +143,95 @@ export default function AccountData(props: Props) {
                 <span className="flex flex-grow">I saw a...</span>
                 <span className="flex justify-end">...on, at:</span>
               </div>
+
               {sortUserSightingsByDate(data).map(
                 (sighting: SortedUserSighting) => {
                   return (
                     <div
                       key={`sightingId ${sighting.id}`}
-                      className="w-full pt-4 font-sans font-extralight border-b border-dotted justify-between border-gray-950"
+                      className="flex items-center w-full border-b border-dotted justify-between border-gray-950"
                     >
-                      <div className="flex w-full text-xl">
-                        <span className="flex flex-grow font-bold w-1/4">
-                          <Link
-                            href={`/explore/birds/${sighting.birdId}` as Route}
-                          >
-                            {capitalizeFirstLetter(sighting.name)}
-                          </Link>
-                        </span>
-                        <span className="flex text-right justify-end w-1/6 font-bold">
-                          {formatDate(sighting.time)}
-                        </span>
+                      <div className="w-full pt-4 font-sans font-extralight">
+                        <div className="flex w-full text-xl">
+                          <span className="flex flex-grow font-bold w-1/4">
+                            <Link
+                              href={
+                                `/explore/birds/${sighting.birdId}` as Route
+                              }
+                            >
+                              {capitalizeFirstLetter(sighting.name)}
+                            </Link>
+                          </span>
+                          <span className="flex text-right justify-end w-1/6 font-bold">
+                            {formatDate(sighting.time)}
+                          </span>
+                        </div>
+                        <div className="flex w-full pt-2 pb-2">
+                          <span className="flex flex-grow w-1/4 italic">
+                            {capitalizeFirstLetterOnly(sighting.species)}
+                          </span>
+                          <span className="flex flex-grow" />
+                          <span className="w-1/2 text-right">
+                            {sighting.location}{' '}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex w-full pt-2 pb-2">
-                        <span className="flex flex-grow w-1/4 italic">
-                          {capitalizeFirstLetterOnly(sighting.species)}
-                        </span>
-                        <span className="flex flex-grow" />
-                        <span className="w-1/2 text-right">
-                          {sighting.location}{' '}
-                        </span>
-                      </div>
+                      {props.isOwner ? (
+                        <button
+                          className="pl-4 "
+                          onClick={() => {
+                            setDeleteId(String(sighting.id));
+                            setIsToBeDeleted(true);
+                            setDeleteContent(sighting.name);
+                          }}
+                        >
+                          <Image
+                            alt="delete"
+                            src="/images/icon_unchecked.svg"
+                            width={32}
+                            height={32}
+                          />
+                        </button>
+                      ) : (
+                        <span />
+                      )}
                     </div>
                   );
                 },
               )}
             </section>
           </section>
+        )}
+        {isToBeDeleted ? (
+          <section className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-80">
+            <div className="bg-gray-800 rounded-md p-12 w-3/4 md:w-1/4 border border-dotted border-yellow-550 flex flex-col justify-center items-center">
+              <div className="text-center text-xl font-mono">
+                Do you really want to delete your sighting of{' '}
+                {capitalizeFirstLetter(deleteContent)}?
+              </div>
+              <div className="pt-8">
+                <button
+                  className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full"
+                  onClick={async () => {
+                    await deleteHandler();
+                    setIsToBeDeleted(false);
+                  }}
+                >
+                  Yes
+                </button>
+                <button
+                  className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full ml-4"
+                  onClick={() => {
+                    setIsToBeDeleted(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </section>
+        ) : (
+          <span />
         )}
         <section className="md:hidden flex flex-col self-start w-full h-60 text-3xl">
           <ExploreButton />
