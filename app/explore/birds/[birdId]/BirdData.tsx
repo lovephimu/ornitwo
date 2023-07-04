@@ -72,7 +72,7 @@ const sightingsQuery = gql`
 export default function BirdData(props: Props) {
   const { loading, error, data } = useQuery(sightingsQuery, {
     variables: { sightingsByBirdId: props.birdId, birdId: props.birdId },
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
   });
   if (error) {
     console.log(error);
