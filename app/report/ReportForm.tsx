@@ -12,6 +12,7 @@ import { formatDate } from '../functions/formatDate';
 import { makeMaxRange, makeTimeObject } from '../functions/makeTimeObject';
 
 // const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+// delete this comment
 
 const createSightingMutation = gql`
   mutation CreateSighting(
