@@ -2,7 +2,7 @@
 
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
 
 type Props = {

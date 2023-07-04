@@ -82,12 +82,6 @@ export default function ReportForm(props: Props) {
     },
   });
 
-  console.log(time);
-  console.log(currentTime);
-  console.log(maxTime);
-  console.log(initialMaxTime.current);
-  console.log(formatDate(initialMaxTime.current));
-
   return (
     <form className="flex flex-col flex-grow items-center font-sans font-extralight text-xl w-full bg-gray-775 pt-8">
       <section>
@@ -149,22 +143,10 @@ export default function ReportForm(props: Props) {
           </div>
         )}
       </span>
-      {/* <label htmlFor="location" className=" font-mono pt-8 pb-4">
-        Place:
-      </label>
-      <input
-        id="location"
-        value={location}
-        onChange={(event) => {
-          setLocation(event.currentTarget.value);
-        }}
-        required
-        className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
-      /> */}
       <span className=" font-mono pt-4 pb-4">Place:</span>
       <Autocomplete
         className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center autofill:bg-gray-700"
-        apiKey={apiKey}
+        apiKey="AIzaSyAcP-9cPLQFg7qz6xa0bF8nCij-KYCfKyQ"
         options={{
           types: ['geocode'],
           componentRestrictions: { country: 'at' },

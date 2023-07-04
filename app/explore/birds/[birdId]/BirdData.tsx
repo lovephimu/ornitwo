@@ -163,9 +163,6 @@ export default function BirdData(props: Props) {
               })}
             </div>
           </section>
-          {/* <section className="flex p-8 justify-center w-full">
-            <h2 className="font-mono text-2xl ">Last seen at:</h2>
-          </section> */}
           <section className="text-center pb-8 md:w-1/3">
             <h2 className="font-mono text-2xl pt-8">Last seen at:</h2>
             <SightingMap coordinates={sortedBirdsArray} />

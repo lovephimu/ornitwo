@@ -5,7 +5,7 @@ import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MostSeenBirdsDoughnut from '../../../charts/mostSeenBirds';
 import ExploreButton from '../../../components/ExploreButton';
 import LoadingStatement from '../../../components/LoadingStatement';
