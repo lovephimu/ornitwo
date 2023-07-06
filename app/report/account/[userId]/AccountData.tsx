@@ -103,7 +103,7 @@ export default function AccountData(props: Props) {
   return (
     <main className="w-full items-center h-screen md:bg-gray-775">
       <section className="md:flex md:flex-row">
-        <section className="flex flex-col  w-full md:w-1/3 bg-gray-775">
+        <section className="flex flex-col  w-full md:w-1/3 bg-gray-775 md:border border-dotted border-yellow-550 md:ml-8 md:mt-8 md:p-8">
           <div className="flex flex-col justify-center items-center w-full pt-12">
             <h2 className="font-mono text-2xl">Profile</h2>
             <h1 className="font-serif font-semibold text-5xl py-8">
@@ -130,10 +130,10 @@ export default function AccountData(props: Props) {
             </div>
           </section>
         ) : (
-          <section className="md:flex md:flex-row w-full md:w-2/3 md:h-auto md:pt-28 ">
+          <section className="md:flex md:flex-row w-full border-dotted border-yellow-550 md:w-2/3 md:h-auto md:mt-28 md:border-t">
             <section className="flex flex-col w-full bg-gray-800 md:bg-gray-775 items-center p-8">
               <h2 className="font-mono text-2xl ">Most spotted birds:</h2>
-              <div className="flex justify-center w-full p-8">
+              <div className="flex justify-center items-center w-full p-8">
                 <MostSeenBirdsDoughnut data={data} />
               </div>
             </section>

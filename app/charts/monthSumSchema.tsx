@@ -41,7 +41,7 @@ export default function MonthSum(props: Props) {
   };
 
   return (
-    <div className="flex justify-center w-full h-80">
+    <div className="flex items-center justify-center w-full h-60 md:h-80">
       <Line
         data={chartData}
         options={{

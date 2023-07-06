@@ -36,8 +36,8 @@ export default function LoginForm(props: Props) {
   });
 
   return (
-    <section>
-      <form className="flex flex-col items-center font-sans font-extralight text-xl">
+    <section className="w-full flex flex-col items-center">
+      <form className="flex flex-col items-center font-sans font-extralight text-xl w-full md:max-w-2xl">
         <label htmlFor="username" className="font-mono pt-8 pb-4">
           Username:
         </label>
@@ -64,14 +64,14 @@ export default function LoginForm(props: Props) {
           className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
         />
         <button
-          className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800"
+          className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800 hover:text-yellow-550 active:text-red-550"
           formAction={async () => {
             await loginHandler();
           }}
         >
           Login
         </button>
-        <p>{onError ? onError : ''}</p>
+        <p className="text-red-550">{onError ? onError : ''}</p>
       </form>
       <section className="flex w-full justify-center font-mono p-8 text-xl">
         <Link href={'/report/register' as Route}>or create new account</Link>

@@ -20,7 +20,6 @@ const deleteSightingMutation = gql`
 `;
 
 export default function DeleteWindow(props: Props) {
-  console.log(props.deleteId);
   const router = useRouter();
   const [isActive, setIsActive] = useState(props.isWillingToDelete);
   const [deleteHandler] = useMutation(deleteSightingMutation, {

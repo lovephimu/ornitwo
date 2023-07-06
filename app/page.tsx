@@ -1,13 +1,59 @@
 // import Image from 'next/image';
 
+import { Route } from 'next';
+import Image from 'next/image';
+import { redirect } from 'next/navigation';
+import BasicButton from './components/BasicButton';
 import ExploreButton from './components/ExploreButton';
 import ReportButton from './components/ReportButton';
 
 export default function Home() {
   return (
     <main className="flex flex-col w-full items-center h-screen">
-      <section className="flex flex-grow justify-center items-center">
-        <h1 className="font-serif font-semibold text-6xl">orniTwo</h1>
+      <section className="flex flex-grow flex-col justify-center items-center">
+        <h1 className="font-serif font-semibold text-6xl md:pt-16">orniTwo</h1>
+        <h2 className="pt-8 pb-16 font-mono">a birdwatching web app</h2>
+        <h2 className="hidden md:block font-mono text-2xl pb-8">Read me!</h2>
+        <div className="hidden md:flex font-mono w-3/4 justify-center gap-x-16">
+          <div className="flex flex-col items-center w-1/2 ">
+            <div className="flex items-center flex-col w-full text-center max-w-2xl border border-dotted border-yellow-550 rounded-md p-8 min-h-full">
+              <div className="w-3/4 flex-grow">
+                <h2 className="text-2xl pb-4">Curious?</h2>
+                <p className="font-extralight">
+                  Interested in checking out the most seen birds and our most
+                  active users?
+                </p>
+                <p className="font-extralight pt-4 pb-8">
+                  Then this is the place to go!
+                </p>
+              </div>
+              <BasicButton
+                buttonLink="/explore"
+                buttonText="Explore"
+                buttonImage="icon_report"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col items-center w-1/2 min-h-150">
+            <div className="flex items-center flex-col w-full text-center max-w-2xl border border-dotted border-yellow-550 rounded-md p-8 min-h-full">
+              <div className="w-3/4">
+                <h2 className="text-2xl pb-4">Seen a bird?</h2>
+                <p className="font-extralight">
+                  If you would like to test the report function: register & try
+                  reporting a 'House Sparrow'
+                </p>
+                <p className="font-extralight pt-4 pb-8">
+                  Or check out our list of trackable birds.
+                </p>
+              </div>
+              <BasicButton
+                buttonLink="/report"
+                buttonText="Report"
+                buttonImage="icon_report"
+              />
+            </div>
+          </div>
+        </div>
       </section>
       <section className="flex flex-col self-start w-full h-1/4 text-3xl">
         <ExploreButton />

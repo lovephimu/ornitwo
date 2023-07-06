@@ -11,7 +11,7 @@ import { capitalizeFirstLetterOnly } from '../functions/capitalizeFirstLetterOnl
 import { rankBirds } from '../functions/rankBirds';
 
 export type ExploreQuery = {
-  sightings: [ExploreSighting];
+  sightings: ExploreSighting[];
 };
 
 export type ExploreSighting = {

@@ -16,9 +16,13 @@ module.exports = {
         gray: {
           775: '#253041',
           750: '#2B384B',
+          725: '#457B9D',
         },
         yellow: {
           550: '#FBB159',
+        },
+        red: {
+          550: '#EF626C',
         },
       },
       height: {
@@ -35,7 +39,9 @@ module.exports = {
         500: '500px',
       },
       minWidth: {
+        50: '15rem',
         120: '35rem',
+        150: '180rem',
       },
       maxWidth: {
         120: '35rem',

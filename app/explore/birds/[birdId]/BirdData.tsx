@@ -97,12 +97,14 @@ export default function BirdData(props: Props) {
           {capitalizeFirstLetterOnly(data.bird.species)}
         </h2>
 
-        <Image
-          height={600}
-          width={600}
-          alt="bird portrait"
-          src={`/images/image_bird_${data.bird.id}.png`}
-        />
+        <div className="md:w-96">
+          <Image
+            height={600}
+            width={600}
+            alt="bird portrait"
+            src={`/images/image_bird_${data.bird.id}.png`}
+          />
+        </div>
         {data.bird.bio ? (
           <h3 className="font-serif font-semibold text-3xl p-8">
             {capitalizeFirstLetter(data.bird.bio)}
@@ -113,7 +115,7 @@ export default function BirdData(props: Props) {
       </section>
       {!data.sightingsByBird[0] ? (
         <div className="flex flex-col w-full justify-center items-center h-96 font-mono">
-          <h2 className="font-mono text-2xl ">Sad news!</h2>
+          <h2 className="font-mono text-2xl">Sad news!</h2>
           <p className="p-8 text-center">
             Noone has seen {capitalizeFirstLetter(data.bird.name)} in a while!
             Have you? Be the first to{' '}
@@ -121,16 +123,16 @@ export default function BirdData(props: Props) {
           </p>
         </div>
       ) : (
-        <section className="md:flex md:flex-row md:w-full">
+        <section className="md:flex md:flex-row md:w-full md:border-t border-dotted border-yellow-550 md:mt-4">
           <section className="flex flex-col w-full bg-gray-750 items-center p-8 md:bg-gray-800 md:w-1/3">
             <h2 className="font-mono text-2xl">Average spottings:</h2>
 
-            <div className="flex pt-8 w-full justify-center">
+            <div className="flex pt-8 w-full justify-center items-center">
               <MonthSum data={data} />
             </div>
           </section>
           <section className="flex flex-col w-full bg-gray-800 items-center p-8 md:w-1/3">
-            <h2 className="font-mono text-2xl pb-8 ">Last seen by:</h2>
+            <h2 className="font-mono text-2xl pb-8">Last seen by:</h2>
 
             <div className="pb-8 w-full">
               <div className="flex w-full justify-between font-mono font-light text-xl border-b border-dotted border-yellow-550">

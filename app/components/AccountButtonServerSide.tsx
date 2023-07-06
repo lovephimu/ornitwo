@@ -10,7 +10,7 @@ export default async function AccountButtonServerSide() {
 
   return (
     <Link
-      className="font-mono text-xl"
+      className="font-mono text-xl no-underline"
       href={
         user
           ? (`/report/account/${user.id}` as Route)

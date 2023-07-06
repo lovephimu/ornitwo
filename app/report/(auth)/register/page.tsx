@@ -23,7 +23,7 @@ export default async function RegistrationPage({ searchParams }: Props) {
       <section className="flex self-start w-full h-1/4 justify-center items-end pb-12">
         <h1 className="font-serif font-semibold text-3xl">orniTwo</h1>
       </section>
-      <section className="flex flex-col flex-grow w-full bg-gray-775">
+      <section className="flex flex-col flex-grow items-center w-full bg-gray-775">
         <div className="flex justify-center w-full pt-12 pb-6">
           <h2 className="font-mono text-2xl">Register</h2>
         </div>

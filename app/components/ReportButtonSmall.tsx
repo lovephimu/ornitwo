@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function ReportButtonSmall() {
   return (
-    <Link className="font-mono text-xl" href={'/report' as Route}>
+    <Link className="font-mono text-xl no-underline" href={'/report' as Route}>
       Report
     </Link>
   );
