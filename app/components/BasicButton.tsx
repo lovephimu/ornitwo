@@ -1,7 +1,6 @@
 'use client';
 
 import { Route } from 'next';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 type Props = {
