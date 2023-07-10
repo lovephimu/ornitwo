@@ -6,8 +6,8 @@ import { sql } from './connect';
 export type User = {
   id: number;
   username: string;
-  passwordHash: string;
-  userPic: string;
+  passwordHash: string | null;
+  userPic: string | null;
 };
 
 export type UserWithPasswordHash = User & {
