@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import TopTenUsers from '../charts/topTenUsers';
 import LoadingStatement from '../components/LoadingStatement';
+import TopTenChart from '../components/TopTenChart';
 import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
 import { capitalizeFirstLetterOnly } from '../functions/capitalizeFirstLetterOnly';
 import { rankBirds } from '../functions/rankBirds';
@@ -195,6 +196,7 @@ export default function Statistics() {
           <p className="font-mono text-base pt-2 pb-8">by recent sightings</p>
           <div className="flex justify-center items-center w-full sm:h-80 h-60 md:h-auto">
             {/* <TopTenUsers data={data} /> */}
+            <TopTenChart />
           </div>
         </section>
       </section>
