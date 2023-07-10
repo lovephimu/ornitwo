@@ -19,11 +19,11 @@ export default function TopTenChart() {
   const { loading, error, data } = useQuery(sightingsQuery, {
     fetchPolicy: 'cache-and-network',
   });
-  if (error) {
-    console.log(error.message);
-  }
   if (loading) {
     return <LoadingStatement />;
+  }
+  if (error) {
+    return <p>Unable to load ranking</p>;
   }
 
   return <TopTenUsers data={data} />;
