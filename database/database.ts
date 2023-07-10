@@ -11,7 +11,7 @@ export type User = {
 };
 
 export type UserWithPasswordHash = User & {
-  passwordHash: string;
+  passwordHash: string | null;
 };
 
 export type UserWithoutSession = {
@@ -22,7 +22,7 @@ export type UserWithoutSession = {
 export type UserWithPic = {
   id: number;
   username: string;
-  userPic: string;
+  userPic: string | null;
 };
 
 export type Bird = {
@@ -36,16 +36,16 @@ export type Sighting = {
   id: number;
   userId: number;
   birdId: number;
-  location: string;
-  timeStamp: string;
-  lat: number;
-  lng: number;
+  location: string | null;
+  timeStamp: string | null;
+  lat: number | null;
+  lng: number | null;
 };
 
 export type Session = {
   id: number;
   token: string;
-  userId: number;
+  userId: number | null;
 };
 
 // GET BIRD METHODS
