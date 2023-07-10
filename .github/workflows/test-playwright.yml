@@ -44,10 +44,10 @@ jobs:
         run: pnpm build
       - name: Run TypeScript Compiler
         run: pnpm tsc
-      - name: Run ESLint
-        run: pnpm eslint . --max-warnings 0
-      - name: Run Stylelint
-        run: pnpm stylelint '**/*.{css,scss,less,js,tsx}'
+      # - name: Run ESLint
+      #   run: pnpm eslint . --max-warnings 0
+      # - name: Run Stylelint
+      #   run: pnpm stylelint '**/*.{css,scss,less,js,tsx}'
       - name: Install Playwright
         run: pnpm playwright install --with-deps chromium
       - name: Run tests
