@@ -1,4 +1,6 @@
+import { Route } from 'next';
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import { getUserBySessionToken } from '../../../../database/database';
 import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
 import LogoutButton from '../../../components/LogoutButton';
@@ -21,13 +23,15 @@ export default async function AccountPage(props: Props) {
   const isOwner =
     compareUser?.id === parseInt(props.params.userId) ? true : false;
 
-  console.log(isOwner);
-
   return (
     <main className="flex flex-col w-full items-center h-screen">
       <section className="flex items-center w-full p-8 justify-between font-extralight">
         <div className="hidden md:block ">
-          <span className="font-serif font-semibold text-3xl">orniTwo</span>
+          <span className="font-serif font-semibold text-3xl">
+            <Link className="no-underline" href={'/' as Route}>
+              orniTwo
+            </Link>
+          </span>
           <span className="font-mono text-2xl font-normal"> : Explore</span>
         </div>
         <div className="md:pr-8 md:ml-auto">

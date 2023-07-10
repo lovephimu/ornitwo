@@ -32,7 +32,7 @@ export default function MostSeenBirdsDoughnut(props: Props) {
   };
 
   return (
-    <div className="flex w-full justify-center h-96">
+    <div className="flex w-full justify-center h-60 sm:h-80 md:h-96">
       <Doughnut
         data={chartData}
         options={{

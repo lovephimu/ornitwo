@@ -6,6 +6,10 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    screens: {
+      sm: '400px',
+      md: '768px',
+    },
     extend: {
       fontFamily: {
         sans: ['var(--font-sans)'],
@@ -30,6 +34,7 @@ module.exports = {
         150: '44rem',
         200: '200px',
         500: '500px',
+        600: '55rem',
       },
       width: {
         100: '30rem',
@@ -42,15 +47,18 @@ module.exports = {
         50: '15rem',
         120: '35rem',
         150: '180rem',
+        '1/2': '50%',
       },
       maxWidth: {
         120: '35rem',
         150: '40rem',
+        '8/10': '80%',
+        '6/10': '60%',
       },
       spacing: {
         120: '120px',
       },
     },
   },
-  plugins: [require('autoprefixer')],
+  plugins: [require('autoprefixer'), require('daisyui')],
 };

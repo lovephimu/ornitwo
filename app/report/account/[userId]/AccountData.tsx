@@ -104,11 +104,17 @@ export default function AccountData(props: Props) {
     <main className="w-full items-center h-screen md:bg-gray-775">
       <section className="md:flex md:flex-row">
         <section className="flex flex-col  w-full md:w-1/3 bg-gray-775 md:border border-dotted border-yellow-550 md:ml-8 md:mt-8 md:p-8">
-          <div className="flex flex-col justify-center items-center w-full pt-12">
+          <div className="flex flex-col justify-center items-center w-full pt-12 sm:pb-8 md:pb-0">
             <h2 className="font-mono text-2xl">Profile</h2>
-            <h1 className="font-serif font-semibold text-5xl py-8">
-              {data.user.username}
-            </h1>
+            {data.user.username.length > 12 ? (
+              <h1 className="font-serif font-semibold sm:text-5xl text-3xl py-8">
+                {capitalizeFirstLetterOnly(data.user.username)}
+              </h1>
+            ) : (
+              <h1 className="font-serif font-semibold text-5xl py-8">
+                {capitalizeFirstLetterOnly(data.user.username)}
+              </h1>
+            )}
             <div className="flex flex-grow">
               <Image
                 width={500}
@@ -120,13 +126,21 @@ export default function AccountData(props: Props) {
           </div>
         </section>
         {!data.user.sightings[0] ? (
-          <section className="md:w-2/3">
+          <section className="bg-gray-800 md:w-2/3 md:bg-gray-775">
             <div className="flex flex-col w-full justify-center items-center font-mono py-8 h-80">
               <h2 className="font-mono text-2xl">To soon!</h2>
               <p className="p-8 text-center">
                 {capitalizeFirstLetter(data.user.username)} has not yet posted
                 any reports.
               </p>
+              <button
+                className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full sm:ml-4 sm:mt-0 mt-4"
+                onClick={() => {
+                  router.push('/report' as Route);
+                }}
+              >
+                Report a bird
+              </button>
             </div>
           </section>
         ) : (
@@ -149,11 +163,11 @@ export default function AccountData(props: Props) {
                   return (
                     <div
                       key={`sightingId ${sighting.id}`}
-                      className="flex items-center w-full border-b border-dotted justify-between border-gray-950"
+                      className="flex items-center w-full border-b border-dotted border-gray-950"
                     >
                       <div className="w-full pt-4 font-sans font-extralight">
-                        <div className="flex w-full text-xl">
-                          <span className="flex flex-grow font-bold w-1/4">
+                        <div className="flex w-full text-xl justify-between">
+                          <span className="flex w-2/4 min-w-1/2 font-bold">
                             <Link
                               href={
                                 `/explore/birds/${sighting.birdId}` as Route
@@ -162,7 +176,8 @@ export default function AccountData(props: Props) {
                               {capitalizeFirstLetter(sighting.name)}
                             </Link>
                           </span>
-                          <span className="flex text-right justify-end w-1/6 font-bold">
+                          <span className="flex-grow" />
+                          <span className="flex text-right font-bold">
                             {formatDate(sighting.time)}
                           </span>
                         </div>
@@ -209,7 +224,7 @@ export default function AccountData(props: Props) {
                 Do you really want to delete your sighting of{' '}
                 {capitalizeFirstLetter(deleteContent)}?
               </div>
-              <div className="pt-8">
+              <div className="flex sm:flex-row flex-col items-center pt-8">
                 <button
                   className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full"
                   onClick={async () => {
@@ -220,7 +235,7 @@ export default function AccountData(props: Props) {
                   Yes
                 </button>
                 <button
-                  className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full ml-4"
+                  className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full sm:ml-4 sm:mt-0 mt-4"
                   onClick={() => {
                     setIsToBeDeleted(false);
                   }}

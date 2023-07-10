@@ -38,7 +38,7 @@ export default function TopTenUsers(props: Props) {
   };
 
   return (
-    <div className="flex justify-center w-full h-72 md:h-32">
+    <div className="flex justify-center w-full sm:h-72 md:h-32 h-40">
       <Bar
         data={chartData}
         options={{
@@ -46,13 +46,13 @@ export default function TopTenUsers(props: Props) {
             y: {
               ticks: { color: '#FBB159', stepSize: 5 },
               grid: {
-                color: '#1F2937',
+                color: '#FBB15966',
               },
             },
             x: {
               ticks: { color: '#FBB159' },
               grid: {
-                color: '#1F2937',
+                color: '#FBB15966',
               },
             },
           },

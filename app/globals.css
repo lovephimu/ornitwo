@@ -7,7 +7,7 @@ a {
 }
 
 button {
-  @apply hover:border-yellow-550 hover:transition-colors hover:text-red-550 active:border active:border-red-550;
+  @apply border-yellow-550 hover:border-red-550 hover:transition-colors hover:text-red-550 active:border active:border-red-550;
 }
 
 input:-webkit-autofill,

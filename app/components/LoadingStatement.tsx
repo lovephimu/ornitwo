@@ -1,7 +1,8 @@
 export default function LoadingStatement() {
   return (
     <div className="flex w-full items-center justify-center h-screen">
-      <p className="font-mono">loading...</p>
+      <span className="loading loading-spinner text-warning"></span>
+      <p className="pl-4 font-mono">loading...</p>
     </div>
   );
 }

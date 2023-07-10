@@ -392,19 +392,3 @@ export async function GET(req: NextRequest): Promise<NextResponse<any>> {
 export async function POST(req: NextRequest): Promise<NextResponse<any>> {
   return (await handler(req)) as NextResponse<any>;
 }
-
-// export default startServerAndCreateNextHandler(apolloServer, {
-//   context: async (req, res) => {
-//     const user = await getUserBySessionToken(req.cookies.sessionToken!);
-//     const isUserLoggedIn = user ? true : false;
-//     return { req, res, isUserLoggedIn, user };
-//   },
-// });
-
-// export async function GET(req: NextRequest) {
-//   return await handler(req);
-// }
-
-// export async function POST(req: NextRequest) {
-//   return await handler(req);
-// }

@@ -114,7 +114,7 @@ export default function BirdData(props: Props) {
         )}
       </section>
       {!data.sightingsByBird[0] ? (
-        <div className="flex flex-col w-full justify-center items-center h-96 font-mono">
+        <div className="flex flex-col w-full justify-center items-center h-96 font-mono bg-gray-800">
           <h2 className="font-mono text-2xl">Sad news!</h2>
           <p className="p-8 text-center">
             Noone has seen {capitalizeFirstLetter(data.bird.name)} in a while!
@@ -125,7 +125,7 @@ export default function BirdData(props: Props) {
       ) : (
         <section className="md:flex md:flex-row md:w-full md:border-t border-dotted border-yellow-550 md:mt-4">
           <section className="flex flex-col w-full bg-gray-750 items-center p-8 md:bg-gray-800 md:w-1/3">
-            <h2 className="font-mono text-2xl">Average spottings:</h2>
+            <h2 className="font-mono text-2xl">User spottings:</h2>
 
             <div className="flex pt-8 w-full justify-center items-center">
               <MonthSum data={data} />
@@ -150,10 +150,10 @@ export default function BirdData(props: Props) {
                         <Link
                           href={`/report/account/${sighting.userId}` as Route}
                         >
-                          {sighting.username}
+                          {capitalizeFirstLetterOnly(sighting.username)}
                         </Link>
                       </span>
-                      <span className=" text-right w-1/6 font-bold">
+                      <span className=" text-right font-bold">
                         {formatDate(sighting.time)}
                       </span>
                     </div>
@@ -165,7 +165,7 @@ export default function BirdData(props: Props) {
               })}
             </div>
           </section>
-          <section className="text-center pb-8 md:w-1/3">
+          <section className="text-center pb-8 md:w-1/3 bg-gray-800">
             <h2 className="font-mono text-2xl pt-8">Last seen at:</h2>
             <SightingMap coordinates={sortedBirdsArray} />
           </section>

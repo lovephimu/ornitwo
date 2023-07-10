@@ -11,6 +11,7 @@ jobs:
       PGDATABASE: ornitwo
       PGUSERNAME: ornitwo
       PGPASSWORD: ornitwo
+      GRAPHQL_ENDPOINT: localhost
     steps:
       - name: Start preinstalled PostgreSQL on Ubuntu
         run: |

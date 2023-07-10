@@ -64,14 +64,16 @@ export default function LoginForm(props: Props) {
           className="bg-transparent border border-dotted border-yellow-550 p-4 w-3/4 text-center"
         />
         <button
-          className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800 hover:text-yellow-550 active:text-red-550"
+          className="font-mono m-8 px-8 py-4 border border-dotted rounded-full bg-gray-800 hover:text-yellow-550 active:text-red-550"
           formAction={async () => {
             await loginHandler();
           }}
         >
           Login
         </button>
-        <p className="text-red-550">{onError ? onError : ''}</p>
+        <p className="flex justify-center w-full px-8 text-center text-red-550">
+          {onError ? onError : ''}
+        </p>
       </form>
       <section className="flex w-full justify-center font-mono p-8 text-xl">
         <Link href={'/report/register' as Route}>or create new account</Link>

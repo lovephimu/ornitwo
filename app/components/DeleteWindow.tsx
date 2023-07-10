@@ -42,23 +42,27 @@ export default function DeleteWindow(props: Props) {
             Do you really want to delete your sighting of{' '}
             {capitalizeFirstLetter(props.deleteContent)}?
           </div>
-          <div className="pt-8">
-            <button
-              className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full"
-              onClick={async () => {
-                await deleteHandler();
-              }}
-            >
-              Yes
-            </button>
-            <button
-              className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full ml-4"
-              onClick={() => {
-                setIsActive(false);
-              }}
-            >
-              Cancel
-            </button>
+          <div className="flex flex-col pt-8">
+            <div>
+              <button
+                className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full"
+                onClick={async () => {
+                  await deleteHandler();
+                }}
+              >
+                Yes
+              </button>
+            </div>
+            <div>
+              <button
+                className="py-4 px-8 font-mono text-2xl border border-dotted border-yellow-550 rounded-full ml-4"
+                onClick={() => {
+                  setIsActive(false);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </section>

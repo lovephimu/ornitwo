@@ -6,29 +6,29 @@ export const users: User[] = [
     id: 1,
     username: 'cheekychipper',
     passwordHash:
-      '$2a$04$I4GADbz421bdhXfLrIQEFuTfayHKgitMzwpb3miNczdWDmSE6kNn6',
+      '$2b$10$jocJAV1uHwlT2ehYzy2oJuA152UJWtgOc0aRmBdAzuImNpH9J5qi6',
     userPic: '01',
   },
   {
     id: 2,
     username: 'goldwinggoldie',
     passwordHash:
-      '$2a$04$LG.a8S2IkLP3m7NfwjpERuQ2BiNnnDk14acwxWRDPwnOm9MFzpYiO',
-    userPic: '01',
+      '$2b$10$sZPQKKetuditfMeH1ttdCe0l7Xj.vzLZAJ0BvMaltsVW7joO7u1z.',
+    userPic: '02',
   },
   {
     id: 3,
     username: 'jacquelinesparrow',
     passwordHash:
-      '$2a$04$iJRhcafiX3Fxkvcoje.gGORIXsvZP8xpurodTp6SskBzk4jYGyhoG',
-    userPic: '01',
+      '$2b$10$Msv1q1HAhf90ciGa1Oqn1ODHtyOV0JZ9XIh7nTiCMdfWVGGct/OXy',
+    userPic: '03',
   },
   {
     id: 4,
     username: 'dovetail',
     passwordHash:
-      '$2a$04$qs/EdFPdYunlaaGJ18qTB.gUMwGo0E4Yo0TVBtRbgT8SUNWEd8jlS',
-    userPic: '01',
+      '$2b$10$Di4FieSVwmRKjlYv.Kb5y.5pEDe2FnFpnycFeMEpK0TU9iCbUe8Fe',
+    userPic: '05',
   },
 ];
 

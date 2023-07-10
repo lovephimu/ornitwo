@@ -64,7 +64,8 @@ export default function Summary(props: Props) {
         <section className="flex flex-col w-full">
           <div className="flex flex-col justify-center w-full pt-12 p-6 items-center font-mono ">
             <h2 className="text-center text-2xl px-8">
-              Thanks for your report, {data.sighting.userData.username}!
+              Thanks for your report,{' '}
+              {capitalizeFirstLetterOnly(data.sighting.userData.username)}!
             </h2>
             <p className="text-center pt-6">Report summary:</p>
           </div>
@@ -80,6 +81,7 @@ export default function Summary(props: Props) {
                 className="pr-4"
               />
               <Link
+                className="max-w-6/10"
                 href={`/explore/birds/${data.sighting.birdData.id}` as Route}
               >
                 {capitalizeFirstLetter(data.sighting.birdData.name)}
@@ -90,7 +92,7 @@ export default function Summary(props: Props) {
             </p>
             <p className="pt-8 pb-4 font-light">Location:</p>
             <div className="flex w-full px-8 justify-center">
-              <div>
+              <div className="flex justify-center pb-4 text-xl">
                 <Image
                   src="/images/icon_map_marker.svg"
                   height={40}
@@ -98,8 +100,8 @@ export default function Summary(props: Props) {
                   alt="Map Icon"
                   className="pr-4"
                 />
+                <span className="max-w-6/10">{data.sighting.location}</span>
               </div>
-              <div className="pb-4 text-xl">{data.sighting.location}</div>
             </div>
             <p className="py-4 font-light">Time:</p>
             <div className="flex w-full justify-center">
@@ -137,7 +139,7 @@ export default function Summary(props: Props) {
           </span>
         </div>
       </section>
-      <section className="flex flex-col self-start w-full h-1/4 text-3xl">
+      <section className="flex flex-col self-start w-full text-3xl pt-16">
         <ExploreButton />
         <ReportButton />
       </section>

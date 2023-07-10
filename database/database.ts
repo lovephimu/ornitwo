@@ -137,7 +137,7 @@ export const createUser = cache(
     const [user] = await sql<UserWithoutSession[]>`
   INSERT INTO users
   (username, password_hash)
-  VALUES (${username}, ${passwordHash})
+  VALUES (${username.toLowerCase()}, ${passwordHash})
   RETURNING id, username
   `;
     return user;

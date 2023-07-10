@@ -51,6 +51,7 @@ export default function ReportForm(props: Props) {
   const [locationError, setLocationError] = useState(false);
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
 
   useEffect(() => {
     console.log('Updated Latitude:', lat);
@@ -76,6 +77,7 @@ export default function ReportForm(props: Props) {
     onError: (error) => {
       setOnError(error.message);
       setLocationError(false);
+      setLoadingSpinner(false);
     },
     onCompleted: () => {
       router.refresh();
@@ -244,14 +246,24 @@ export default function ReportForm(props: Props) {
       </div>
 
       <button
-        className="font-mono m-8 px-8 py-4 border border-dotted border-black rounded-full bg-gray-800"
+        className="font-mono m-8 px-8 py-4 border border-dotted rounded-full bg-gray-800"
         formAction={async () => {
+          setLoadingSpinner(true);
           setLocationError(true);
           location ? await sightingHandler() : setLocationError(true);
         }}
       >
-        Send report
+        {loadingSpinner ? (
+          <span className="loading loading-spinner text-warning"></span>
+        ) : (
+          'Send report'
+        )}
       </button>
+      {loadingSpinner ? (
+        <span className="loading loading-spinner text-warning"></span>
+      ) : (
+        <span />
+      )}
     </form>
   );
 }
