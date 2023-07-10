@@ -2,7 +2,6 @@
 
 import { gql, useQuery } from '@apollo/client';
 import TopTenUsers from '../charts/topTenUsers';
-import { ExploreQuery } from '../explore/Statistics';
 import LoadingStatement from './LoadingStatement';
 
 const sightingsQuery = gql`

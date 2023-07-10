@@ -24,11 +24,7 @@ export default function Home() {
                   Then this is the place to go!
                 </p>
               </div>
-              <BasicButton
-                buttonLink="/explore"
-                buttonText="Explore"
-                buttonImage="icon_report"
-              />
+              <BasicButton buttonLink="/explore" buttonText="Explore" />
             </div>
           </div>
           <div className="flex flex-col items-center w-1/2 min-h-150">
@@ -43,11 +39,7 @@ export default function Home() {
                   Or check out our list of trackable birds.
                 </p>
               </div>
-              <BasicButton
-                buttonLink="/report"
-                buttonText="Report"
-                buttonImage="icon_report"
-              />
+              <BasicButton buttonLink="/report" buttonText="Report" />
             </div>
           </div>
         </div>

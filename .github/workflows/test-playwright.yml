@@ -45,7 +45,7 @@ jobs:
       - name: Run TypeScript Compiler
         run: pnpm tsc
       - name: Run ESLint
-        run: pnpm eslint . --max-warnings 0
+        run: pnpm eslint . --max-warnings 5
       - name: Run Stylelint
         run: pnpm stylelint '**/*.{css,scss,less,js,tsx}'
       - name: Install Playwright

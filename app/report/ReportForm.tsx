@@ -254,13 +254,13 @@ export default function ReportForm(props: Props) {
         }}
       >
         {loadingSpinner ? (
-          <span className="loading loading-spinner text-warning"></span>
+          <span className="loading loading-spinner text-warning" />
         ) : (
           'Send report'
         )}
       </button>
       {loadingSpinner ? (
-        <span className="loading loading-spinner text-warning"></span>
+        <span className="loading loading-spinner text-warning" />
       ) : (
         <span />
       )}

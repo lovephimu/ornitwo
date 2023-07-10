@@ -1,7 +1,6 @@
 import { Route } from 'next';
 import Link from 'next/link';
 import ExploreButtonSmall from './components/ExploreButtonSmall';
-import LogoutButton from './components/LogoutButton';
 
 export const rootNotFoundMetadata = {
   title: 'Not Found',

@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 type Props = {
   buttonText: string;
   buttonLink: string;
-  buttonImage: string;
 };
 
 export default function BasicButton(props: Props) {
