@@ -9,7 +9,7 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: `/api/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/graphql`,
     fetchOptions: { cache: 'no-store' },
   });
 
