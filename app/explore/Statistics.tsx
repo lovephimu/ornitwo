@@ -48,7 +48,7 @@ const sightingsQuery = gql`
 
 export default function Statistics() {
   const { loading, error, data } = useQuery(sightingsQuery, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
   });
   if (error) {
     console.log(error.message);
