@@ -246,12 +246,17 @@ const resolvers = {
       }
 
       // check if password compares to hash
-      const isPasswordValid = await bcrypt.compare(
-        args.password,
-        userWithPasswordHash.passwordHash,
-      );
-      if (!isPasswordValid) {
-        throw new GraphQLError("Credentials don't match");
+      const passwordHash = userWithPasswordHash.passwordHash;
+      if (passwordHash !== null) {
+        const isPasswordValid = await bcrypt.compare(
+          args.password,
+          passwordHash,
+        );
+        if (!isPasswordValid) {
+          throw new GraphQLError("Credentials don't match");
+        }
+      } else {
+        throw new GraphQLError('Invalid password hash');
       }
 
       // create token for newly registered user
