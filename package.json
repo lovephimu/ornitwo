@@ -11,8 +11,8 @@
     "migrate": "ley --require tsm"
   },
   "dependencies": {
-    "@apollo/client": "3.8.0-alpha.15",
-    "@apollo/experimental-nextjs-app-support": "^0.2.1",
+    "@apollo/client": "3.8.0-beta.6",
+    "@apollo/experimental-nextjs-app-support": "^0.3.2",
     "@apollo/server": "^4.7.3",
     "@as-integrations/next": "^2.0.0",
     "@graphql-tools/schema": "^10.0.0",
