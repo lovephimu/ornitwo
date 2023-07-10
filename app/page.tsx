@@ -1,8 +1,5 @@
 // import Image from 'next/image';
 
-import { Route } from 'next';
-import Image from 'next/image';
-import { redirect } from 'next/navigation';
 import BasicButton from './components/BasicButton';
 import ExploreButton from './components/ExploreButton';
 import ReportButton from './components/ReportButton';
