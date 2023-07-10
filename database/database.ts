@@ -28,8 +28,8 @@ export type UserWithPic = {
 export type Bird = {
   id: number;
   name: string;
-  species: string;
-  bio: string;
+  species: string | null;
+  bio: string | null;
 };
 
 export type Sighting = {
