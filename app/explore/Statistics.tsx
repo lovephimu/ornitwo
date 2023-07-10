@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import TopTenUsers from '../charts/topTenUsers';
 import LoadingStatement from '../components/LoadingStatement';
+import TopTenChart from '../components/TopTenChart';
 import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
 import { capitalizeFirstLetterOnly } from '../functions/capitalizeFirstLetterOnly';
 import { rankBirds } from '../functions/rankBirds';
@@ -17,8 +18,6 @@ export type ExploreQuery = {
 export type ExploreSighting = {
   userId: string | number;
   birdId: string | number;
-  location: string;
-  timeStamp: string;
   birdData: {
     name: string;
     species: string;
@@ -33,14 +32,9 @@ const sightingsQuery = gql`
     sightings {
       userId
       birdId
-      location
-      timeStamp
       birdData {
         name
         species
-      }
-      userData {
-        username
       }
     }
   }
@@ -58,8 +52,6 @@ export default function Statistics() {
   }
 
   const birdRanking = rankBirds(data);
-
-  console.log(birdRanking);
 
   return (
     <section className="flex flex-col md:flex-row w-full md:h-auto">
@@ -199,7 +191,8 @@ export default function Statistics() {
           <h2 className="font-mono text-2xl ">Most active users</h2>
           <p className="font-mono text-base pt-2 pb-8">by recent sightings</p>
           <div className="flex justify-center items-center w-full sm:h-80 h-60 md:h-auto">
-            <TopTenUsers data={data} />
+            {/* <TopTenUsers data={data} /> */}
+            <TopTenChart />
           </div>
         </section>
       </section>
