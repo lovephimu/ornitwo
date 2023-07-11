@@ -21,9 +21,6 @@ export default async function ExplorePage() {
             name
             species
           }
-          userData {
-            username
-          }
         }
       }
     `,
