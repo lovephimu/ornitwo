@@ -23,7 +23,7 @@ export default function TopTenChart() {
     return <LoadingStatement />;
   }
   if (error) {
-    return <p>Unable to load ranking</p>;
+    return <p className="font-mono">Unable to load ranking</p>;
   }
 
   return <TopTenUsers data={data} />;

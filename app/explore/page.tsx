@@ -1,11 +1,32 @@
+import { gql } from '@apollo/client';
 import { Route } from 'next';
 import Link from 'next/link';
+import { getClient } from '../../util/apolloClient';
 import AccountButtonServerSide from '../components/AccountButtonServerSide';
 import ReportButton from '../components/ReportButton';
 import ReportButtonSmall from '../components/ReportButtonSmall';
 import Statistics from './Statistics';
 
-export default function ExplorePage() {
+export const dynamic = 'force-dynamic';
+
+export default async function ExplorePage() {
+  const { data, loading } = await getClient().query({
+    query: gql`
+      query Sightings {
+        sightings {
+          userId
+          birdId
+          birdData {
+            name
+            species
+          }
+        }
+      }
+    `,
+  });
+
+  if (loading) return <p>loading</p>;
+
   return (
     <main className="flex flex-col w-full items-center h-screen">
       <section className="flex items-center w-full p-8 justify-between font-extralight">
@@ -32,7 +53,7 @@ export default function ExplorePage() {
           <h2 className="font-mono text-2xl">Explore</h2>
         </div>
       </section>
-      <Statistics />
+      <Statistics data={data} />
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ReportButton />
       </section>

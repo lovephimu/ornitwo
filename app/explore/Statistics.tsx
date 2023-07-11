@@ -44,18 +44,24 @@ const sightingsQuery = gql`
   }
 `;
 
-export default function Statistics() {
-  const { loading, error, data } = useQuery(sightingsQuery, {
-    fetchPolicy: 'cache-and-network',
-  });
-  if (error) {
-    console.log(error.message);
-  }
-  if (loading) {
-    return <LoadingStatement />;
-  }
+type Props = {
+  data: ExploreQuery;
+};
 
-  const birdRanking = rankBirds(data);
+export default function Statistics(props: Props) {
+  // const { loading, error, data } = useQuery(sightingsQuery, {
+  //   fetchPolicy: 'cache-and-network',
+  // });
+  // if (error) {
+  //   console.log(error.message);
+  // }
+  // if (loading) {
+  //   return <LoadingStatement />;
+  // }
+
+  const birdRanking = rankBirds(props.data);
+
+  console.log('got data' + props.data);
 
   return (
     <section className="flex flex-col md:flex-row w-full md:h-auto">
