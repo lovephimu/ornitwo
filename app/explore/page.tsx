@@ -10,7 +10,7 @@ import Statistics from './Statistics';
 export const dynamic = 'force-dynamic';
 
 export default async function ExplorePage() {
-  const { data, loading } = await getClient().query({
+  const { data, loading, error } = await getClient().query({
     query: gql`
       query Sightings {
         sightings {
@@ -53,7 +53,7 @@ export default async function ExplorePage() {
           <h2 className="font-mono text-2xl">Explore</h2>
         </div>
       </section>
-      <Statistics data={data} loading={loading} />
+      <Statistics data={data} loading={loading} error={error} />
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ReportButton />
       </section>

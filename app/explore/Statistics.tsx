@@ -1,5 +1,6 @@
 'use client';
 
+import { ApolloError } from '@apollo/client';
 // import { gql } from '@apollo/client';
 import { Route } from 'next';
 import Image from 'next/image';
@@ -47,18 +48,19 @@ export type ExploreSighting = {
 type Props = {
   data: ExploreQuery;
   loading: boolean;
+  error: ApolloError | undefined;
 };
 
 export default function Statistics(props: Props) {
   // const { loading, error, data } = useQuery(sightingsQuery, {
   //   fetchPolicy: 'cache-and-network',
   // });
-  // if (error) {
-  //   console.log(error.message);
-  // }
-  // if (loading) {
-  //   return <LoadingStatement />;
-  // }
+  if (props.error) {
+    return <p className="font-mono">Unable to load data please try again.</p>;
+  }
+  if (props.loading) {
+    return <LoadingStatement />;
+  }
 
   const birdRanking = rankBirds(props.data);
 

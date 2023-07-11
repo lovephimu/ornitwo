@@ -60,7 +60,7 @@ export default function Summary(props: Props) {
         </div>
         <AccountButton userId={data.sighting.userId} />
       </section>
-      <section className="flex flex-col flex-grow w-full md:max-w-150">
+      <section className="flex flex-col w-full md:max-w-150">
         <section className="flex flex-col w-full">
           <div className="flex flex-col justify-center w-full pt-12 p-6 items-center font-mono ">
             <h2 className="text-center text-2xl px-8">
@@ -70,7 +70,7 @@ export default function Summary(props: Props) {
             <p className="text-center pt-6">Report summary:</p>
           </div>
         </section>
-        <section className="flex flex-col flex-grow w-full items-center">
+        <section className="flex flex-col w-full items-center pb-8">
           <div className="bg-transparent border border-dotted border-yellow-550 w-3/4 text-center py-4 font-mono">
             <div className="flex border-b border-dotted border-yellow-550 py-4 text-2xl justify-center">
               <Image
@@ -139,7 +139,7 @@ export default function Summary(props: Props) {
           </span>
         </div>
       </section>
-      <section className="flex flex-col self-start w-full text-3xl md:hidden bg-gray-800 pt-16">
+      <section className="flex flex-col flex-grow self-start w-full text-3xl md:hidden bg-gray-800">
         <ExploreButton />
         <ReportButton />
       </section>

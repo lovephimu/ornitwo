@@ -249,7 +249,11 @@ export default function ReportForm(props: Props) {
         formAction={async () => {
           setLoadingSpinner(true);
           setLocationError(true);
-          location ? await sightingHandler() : setLocationError(true);
+          if (location) {
+            await sightingHandler();
+          } else {
+            setLocationError(true);
+          }
         }}
       >
         {loadingSpinner ? (

@@ -10,8 +10,7 @@ export default function ExploreButton() {
     <div className="flex font-mono font-light bg-gray-775 w-full justify-center h-32 items-center md:hidden">
       <button
         onClick={() => {
-          router.refresh();
-          router.push('/explore' as Route);
+          router.replace('/explore' as Route);
         }}
       >
         Explore
