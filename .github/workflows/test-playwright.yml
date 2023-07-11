@@ -49,6 +49,8 @@ jobs:
         run: pnpm eslint . --max-warnings 5
       - name: Run Stylelint
         run: pnpm stylelint '**/*.{css,scss,less,js,tsx}'
+      - name: Start the server
+        run: pnpm start
       - name: Install Playwright
         run: pnpm playwright install --with-deps chromium
       - name: Run tests
