@@ -9,11 +9,9 @@ test('navigation test', async ({ page }) => {
     }),
   ).toBeVisible();
 
-  await expect(
-    page.getByRole('button', { name: 'report icon Report' }),
-  ).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Report' })).toBeVisible();
 
-  await page.getByRole('button', { name: 'report icon Report' }).click();
+  await page.getByRole('button', { name: 'Report' }).click();
 
   await expect(page).toHaveURL('http://localhost:3000/report/login');
 });

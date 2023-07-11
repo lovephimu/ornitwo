@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import TopTenUsers from '../charts/topTenUsers';
+// import TopTenUsers from '../charts/topTenUsers';
 import LoadingStatement from '../components/LoadingStatement';
 import TopTenChart from '../components/TopTenChart';
 import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
