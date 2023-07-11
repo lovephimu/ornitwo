@@ -1,6 +1,16 @@
 import { expect, test } from '@playwright/test';
 
 test('navigation test', async ({ page }) => {
+  page.on('response', (response) => {
+    console.log(`Response URL: ${response.url()}`);
+    console.log(`Response status: ${response.status()}`);
+  });
+
+  page.on('requestfailed', (request) => {
+    console.log(`Failed to load URL: ${request.url()}`);
+    console.log(`Failure error text: ${request.failure()?.errorText}`);
+  });
+
   await page.goto('http://localhost:3000');
 
   await expect(
