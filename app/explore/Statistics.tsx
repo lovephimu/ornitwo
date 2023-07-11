@@ -204,7 +204,10 @@ export default function Statistics(props: Props) {
           <h2 className="font-mono text-2xl ">Most active users</h2>
           <p className="font-mono text-base pt-2 pb-8">by recent sightings</p>
           <div className="flex justify-center items-center w-full sm:h-80 h-60 md:h-auto">
-            {!props.loading ? <TopTenChart /> : <p>loading</p>}
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+              props.loading ? <TopTenChart /> : <p>loading</p>
+            }
           </div>
         </section>
       </section>

@@ -28,9 +28,7 @@ export default function TopTenChart() {
   //     }
   //   `,
   // });
-  const { loading, error, data } = useQuery(sightingsQuery, {
-    fetchPolicy: 'cache-and-network',
-  });
+  const { loading, error, data } = useQuery(sightingsQuery);
   if (loading) {
     return <LoadingStatement />;
   }
