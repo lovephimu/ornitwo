@@ -12,7 +12,7 @@ jobs:
       PGUSERNAME: ornitwo
       PGPASSWORD: ornitwo
       GRAPHQL_ENDPOINT: http://localhost:3000
-      NEXT_PUBLIC_BASE_URL: http://localhost:3000/api/graphql
+      NEXT_PUBLIC_BASE_URL: http://localhost:3000
     steps:
       - name: Start preinstalled PostgreSQL on Ubuntu
         run: |
