@@ -139,7 +139,7 @@ export default function Summary(props: Props) {
           </span>
         </div>
       </section>
-      <section className="flex flex-col self-start w-full text-3xl pt-16">
+      <section className="flex flex-col self-start w-full text-3xl md:hidden bg-gray-800 pt-16">
         <ExploreButton />
         <ReportButton />
       </section>

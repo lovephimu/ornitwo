@@ -1,6 +1,6 @@
 'use client';
 
-import { gql, useQuery } from '@apollo/client';
+// import { gql } from '@apollo/client';
 import { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -31,21 +31,22 @@ export type ExploreSighting = {
 //   username
 // }
 
-const sightingsQuery = gql`
-  query Sightings {
-    sightings {
-      userId
-      birdId
-      birdData {
-        name
-        species
-      }
-    }
-  }
-`;
+// const sightingsQuery = gql`
+//   query Sightings {
+//     sightings {
+//       userId
+//       birdId
+//       birdData {
+//         name
+//         species
+//       }
+//     }
+//   }
+// `;
 
 type Props = {
   data: ExploreQuery;
+  loading: boolean;
 };
 
 export default function Statistics(props: Props) {
@@ -197,7 +198,13 @@ export default function Statistics(props: Props) {
             </div>
           </div>
         </section>
-        {/* toptenplaceholder */}
+        <section className="flex flex-col items-center p-8 bg-gray-775 md:bg-gray-800 w-full md:h-auto">
+          <h2 className="font-mono text-2xl ">Most active users</h2>
+          <p className="font-mono text-base pt-2 pb-8">by recent sightings</p>
+          <div className="flex justify-center items-center w-full sm:h-80 h-60 md:h-auto">
+            {!props.loading ? <TopTenChart /> : <p>loading</p>}
+          </div>
+        </section>
       </section>
     </section>
   );

@@ -5,7 +5,6 @@ import { getClient } from '../../util/apolloClient';
 import AccountButtonServerSide from '../components/AccountButtonServerSide';
 import ReportButton from '../components/ReportButton';
 import ReportButtonSmall from '../components/ReportButtonSmall';
-import TopTenChart from '../components/TopTenChart';
 import Statistics from './Statistics';
 
 export const dynamic = 'force-dynamic';
@@ -54,14 +53,7 @@ export default async function ExplorePage() {
           <h2 className="font-mono text-2xl">Explore</h2>
         </div>
       </section>
-      <Statistics data={data} />
-      {/* <section className="flex flex-col items-center p-8 bg-gray-775 md:bg-gray-800 w-full md:h-auto">
-        <h2 className="font-mono text-2xl ">Most active users</h2>
-        <p className="font-mono text-base pt-2 pb-8">by recent sightings</p>
-        <div className="flex justify-center items-center w-full sm:h-80 h-60 md:h-auto">
-          <TopTenChart />
-        </div>
-      </section> */}
+      <Statistics data={data} loading={loading} />
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ReportButton />
       </section>
