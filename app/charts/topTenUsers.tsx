@@ -3,14 +3,18 @@
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import { ExploreQuery } from '../explore/Statistics';
+import { SightingUsername } from '../../database/database';
 import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
 import { rankUsers } from '../functions/rankUsers';
 
 Chart.register(CategoryScale);
 
+export type SightingUsernameArray = {
+  sightingsJointUsers: SightingUsername[];
+};
+
 type Props = {
-  data: ExploreQuery;
+  data: SightingUsernameArray;
 };
 
 export default function TopTenUsers(props: Props) {

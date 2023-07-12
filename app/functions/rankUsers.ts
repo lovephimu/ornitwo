@@ -1,11 +1,9 @@
-import { ExploreQuery } from '../explore/Statistics';
+import { SightingUsernameArray } from '../charts/topTenUsers';
 
-export function rankUsers(dataInput: ExploreQuery) {
-  const userArray = dataInput.sightings.map((sighting) => {
-    return { userId: sighting.userId, username: sighting.userData.username };
+export function rankUsers(dataInput: SightingUsernameArray) {
+  const userArray = dataInput.sightingsJointUsers.map((sighting) => {
+    return { userId: sighting.userId, username: sighting.username };
   });
-
-  console.log(userArray);
 
   const userList = [...new Set(userArray.map((user) => user.username))];
 

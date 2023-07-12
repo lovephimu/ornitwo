@@ -1,6 +1,10 @@
 import { gql } from '@apollo/client';
 import { Route } from 'next';
 import Link from 'next/link';
+import {
+  getJointBirdSightings,
+  getJointUserSightings,
+} from '../../database/database';
 import { getClient } from '../../util/apolloClient';
 import AccountButtonServerSide from '../components/AccountButtonServerSide';
 import ReportButton from '../components/ReportButton';
@@ -10,16 +14,16 @@ import Statistics from './Statistics';
 export const dynamic = 'force-dynamic';
 
 export default async function ExplorePage() {
+  // const testQuery = await getJointBirdSightings();
+  // console.log(testQuery);
+
   const { data, loading, error } = await getClient().query({
     query: gql`
-      query Sightings {
-        sightings {
-          userId
+      query SightingsJointBirds {
+        sightingsJointBirds {
           birdId
-          birdData {
-            name
-            species
-          }
+          name
+          species
         }
       }
     `,

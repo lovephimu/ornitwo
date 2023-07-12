@@ -1,10 +1,14 @@
-import { ExploreQuery } from '../explore/Statistics';
+import { SightingBirdName } from '../../database/database';
 
-export function rankBirds(dataInput: ExploreQuery) {
-  const birdNameList = dataInput.sightings.map((sighting) => {
+export type SightingBirdNameArray = {
+  sightingsJointBirds: SightingBirdName[];
+};
+
+export function rankBirds(dataInput: SightingBirdNameArray) {
+  const birdNameList = dataInput.sightingsJointBirds.map((sighting) => {
     return {
-      birdName: sighting.birdData.name,
-      species: sighting.birdData.species,
+      birdName: sighting.name,
+      species: sighting.species,
       birdId: sighting.birdId,
     };
   });

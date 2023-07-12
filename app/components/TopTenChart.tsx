@@ -5,12 +5,10 @@ import TopTenUsers from '../charts/topTenUsers';
 import LoadingStatement from './LoadingStatement';
 
 const sightingsQuery = gql`
-  query Sightings {
-    sightings {
+  query SightingsJointUsers {
+    sightingsJointUsers {
       userId
-      userData {
-        username
-      }
+      username
     }
   }
 `;

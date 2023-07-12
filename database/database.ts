@@ -42,6 +42,18 @@ export type Sighting = {
   lng: number | null;
 };
 
+export type SightingUsername = {
+  id: number;
+  userId: number;
+  username: string;
+};
+export type SightingBirdName = {
+  id: number;
+  birdId: number;
+  name: string;
+  species: string;
+};
+
 export type Session = {
   id: number;
   token: string;
@@ -185,6 +197,18 @@ export const getSightingsByBirdId = cache(async (id: number) => {
   WHERE bird_id = ${id};
   `;
   return sightingByBird;
+});
+
+export const getJointUserSightings = cache(async () => {
+  const usernameSightings = await sql<SightingUsername[]>`
+  SELECT sightings.id, sightings.user_id, users.username FROM sightings LEFT JOIN users ON sightings.user_id = users.id`;
+  return usernameSightings;
+});
+
+export const getJointBirdSightings = cache(async () => {
+  const birdNameSightings = await sql<SightingBirdName[]>`
+  SELECT sightings.id, sightings.bird_id, birds.name, birds.species FROM sightings LEFT JOIN birds ON sightings.bird_id = birds.id`;
+  return birdNameSightings;
 });
 
 // POST SIGHTING METHODS

@@ -17,6 +17,8 @@ import {
   getBirdById,
   getBirdIdByName,
   getBirds,
+  getJointBirdSightings,
+  getJointUserSightings,
   getSightingById,
   getSightings,
   getSightingsByBirdId,
@@ -55,6 +57,10 @@ const typeDefs = gql`
     sightings: [Sighting]
     "Fetch a sighting by ID"
     sighting(id: ID!): Sighting
+    "Joint sightings by birds"
+    sightingsJointBirds: [SightingBirds]
+    "Joint sightings by users"
+    sightingsJointUsers: [SightingUsers]
     "Fetch a sighting by user ID"
     sightingsByUser(id: ID!): [Sighting]
     "Fetch a sighting by bird ID"
@@ -127,6 +133,25 @@ const typeDefs = gql`
     "Token name"
     token: String
   }
+
+  type SightingBirds {
+    "Sighting ID"
+    id: ID!
+    "Bird ID"
+    birdId: ID!
+    "Bird name"
+    name: String
+    "Bird species"
+    species: String
+  }
+  type SightingUsers {
+    "Sighting ID"
+    id: ID!
+    "Bird ID"
+    userId: ID!
+    "Bird name"
+    username: String
+  }
 `;
 
 // RESOLVERS
@@ -156,6 +181,12 @@ const resolvers = {
     },
     sightingsByBird: async (parent: null, args: { id: number }) => {
       return await getSightingsByBirdId(args.id);
+    },
+    sightingsJointBirds: async () => {
+      return await getJointBirdSightings();
+    },
+    sightingsJointUsers: async () => {
+      return await getJointUserSightings();
     },
   },
 
