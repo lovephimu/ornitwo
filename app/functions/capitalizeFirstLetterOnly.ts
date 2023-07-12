@@ -1,3 +1,4 @@
-export function capitalizeFirstLetterOnly(str: string) {
-  return str.toLowerCase().charAt(0).toUpperCase() + str.slice(1);
+export function capitalizeFirstLetterOnly(str: string | null) {
+  if (str !== null)
+    return str.toLowerCase().charAt(0).toUpperCase() + str.slice(1);
 }

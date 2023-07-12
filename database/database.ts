@@ -45,13 +45,13 @@ export type Sighting = {
 export type SightingUsername = {
   id: number;
   userId: number;
-  username: string;
+  username: string | null;
 };
 export type SightingBirdName = {
   id: number;
   birdId: number;
-  name: string;
-  species: string;
+  name: string | null;
+  species: string | null;
 };
 
 export type Session = {

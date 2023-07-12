@@ -10,9 +10,6 @@ import Statistics from './Statistics';
 export const dynamic = 'force-dynamic';
 
 export default async function ExplorePage() {
-  // const testQuery = await getJointBirdSightings();
-  // console.log(testQuery);
-
   const { data, loading, error } = await getClient().query({
     query: gql`
       query SightingsJointBirds {

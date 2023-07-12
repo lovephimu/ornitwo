@@ -24,13 +24,13 @@ test('ranks users based on sightings', () => {
 
   expect(rankUsers(testData)).toStrictEqual([
     {
-      userId: '2',
-      username: 'cheekychipper',
+      userId: 2,
+      username: 'Bert',
       sightings: 2,
     },
     {
-      userId: '1',
-      username: 'peter',
+      userId: 1,
+      username: 'Anita',
       sightings: 1,
     },
   ]);

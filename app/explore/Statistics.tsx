@@ -81,7 +81,7 @@ export default function Statistics(props: Props) {
                   href={`/explore/birds/${birdRanking[0]?.birdId}` as Route}
                 >
                   <Image
-                    src={`/images/image_bird_${birdRanking[0]?.birdId}_sm.png`}
+                    src={`/images/image_bird_${birdRanking[0]?.birdId}_sm.avif`}
                     alt="most seen bird"
                     width={300}
                     height={300}
@@ -113,7 +113,7 @@ export default function Statistics(props: Props) {
                   href={`/explore/birds/${birdRanking[1]?.birdId}` as Route}
                 >
                   <Image
-                    src={`/images/image_bird_${birdRanking[1]?.birdId}_sm.png`}
+                    src={`/images/image_bird_${birdRanking[1]?.birdId}_sm.avif`}
                     alt="most seen bird"
                     width={150}
                     height={150}
@@ -145,7 +145,7 @@ export default function Statistics(props: Props) {
                   href={`/explore/birds/${birdRanking[2]?.birdId}` as Route}
                 >
                   <Image
-                    src={`/images/image_bird_${birdRanking[2]?.birdId}_sm.png`}
+                    src={`/images/image_bird_${birdRanking[2]?.birdId}_sm.avif`}
                     alt="most seen bird"
                     width={120}
                     height={120}
@@ -183,7 +183,7 @@ export default function Statistics(props: Props) {
           <div className="border border-dotted border-yellow-550 md:h-auto pb-8">
             <div>
               <Image
-                src={`/images/image_bird_${3}.png`}
+                src={`/images/image_bird_${3}_sm.avif`}
                 alt="bird of the week"
                 height={400}
                 width={400}
