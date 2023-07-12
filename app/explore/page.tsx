@@ -1,10 +1,6 @@
 import { gql } from '@apollo/client';
 import { Route } from 'next';
 import Link from 'next/link';
-import {
-  getJointBirdSightings,
-  getJointUserSightings,
-} from '../../database/database';
 import { getClient } from '../../util/apolloClient';
 import AccountButtonServerSide from '../components/AccountButtonServerSide';
 import ReportButton from '../components/ReportButton';

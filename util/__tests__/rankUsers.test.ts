@@ -3,45 +3,21 @@ import { rankUsers } from '../../app/functions/rankUsers';
 
 test('ranks users based on sightings', () => {
   const testData = {
-    sightings: [
+    sightingsJointUsers: [
       {
-        userId: '1',
-        birdId: '2',
-        location: 'Museumquartier, Wien',
-        timeStamp: '12.2.23',
-        birdData: {
-          name: 'eurasian tree sparrow',
-          species: 'passer montanus',
-        },
-        userData: {
-          username: 'peter',
-        },
+        id: 1,
+        userId: 1,
+        username: 'Anita',
       },
       {
-        userId: '2',
-        birdId: '2',
-        location: 'Museumquartier, Wien',
-        timeStamp: '12.2.23',
-        birdData: {
-          name: 'eurasian tree sparrow',
-          species: 'passer montanus',
-        },
-        userData: {
-          username: 'cheekychipper',
-        },
+        id: 2,
+        userId: 2,
+        username: 'Bert',
       },
       {
-        userId: '2',
-        birdId: '2',
-        location: 'Museumquartier, Wien',
-        timeStamp: '12.2.23',
-        birdData: {
-          name: 'eurasian tree sparrow',
-          species: 'passer montanus',
-        },
-        userData: {
-          username: 'cheekychipper',
-        },
+        id: 3,
+        userId: 2,
+        username: 'Bert',
       },
     ],
   };
