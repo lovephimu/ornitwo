@@ -10,20 +10,20 @@ import ReportButton from '../../components/ReportButton';
 import ReportButtonSmall from '../../components/ReportButtonSmall';
 
 export default async function BirdListPage() {
-  const { data, loading, error } = await getClient().query({
-    query: gql`
-      query Birds {
-        birds {
-          name
-          species
-          id
-        }
-      }
-    `,
-  });
+  // const { data, loading, error } = await getClient().query({
+  //   query: gql`
+  //     query Birds {
+  //       birds {
+  //         name
+  //         species
+  //         id
+  //       }
+  //     }
+  //   `,
+  // });
 
-  if (loading) return <LoadingStatement />;
-  if (error) return <p className="font-mono">Error. Please try again.</p>;
+  // if (loading) return <LoadingStatement />;
+  // if (error) return <p className="font-mono">Error. Please try again.</p>;
 
   return (
     <main className="flex flex-col w-full items-center h-screen">
