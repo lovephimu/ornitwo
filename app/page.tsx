@@ -2,6 +2,7 @@
 
 import BasicButton from './components/BasicButton';
 import ExploreButton from './components/ExploreButton';
+import LoadButton from './components/LoadButton';
 import ReportButton from './components/ReportButton';
 
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
                   Then this is the place to go!
                 </p>
               </div>
-              <BasicButton buttonLink="/explore" buttonText="Explore" />
+              <LoadButton buttonLink="/explore" buttonText="Explore" />
             </div>
           </div>
           <div className="flex flex-col items-center w-1/2 min-h-150">
