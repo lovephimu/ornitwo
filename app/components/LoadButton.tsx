@@ -26,7 +26,7 @@ export default function BasicButton(props: Props) {
         </span>
       </button>
       {loading && (
-        <progress className="absolute top-0 w-full progress progress-warning" />
+        <progress className="left-0 top-0 w-screen progress progress-warning absolute" />
       )}
     </>
   );

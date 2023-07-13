@@ -1,5 +1,3 @@
-// import Image from 'next/image';
-
 import { gql } from '@apollo/client';
 import { Route } from 'next';
 import Link from 'next/link';
@@ -53,7 +51,7 @@ export default async function BirdListPage() {
           <h2 className="font-mono text-2xl">Explore</h2>
         </div>
       </section>
-      <BirdList data={data} />
+      {/* <BirdList data={data} /> */}
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ExploreButton />
         <ReportButton />
