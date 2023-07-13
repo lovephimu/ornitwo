@@ -28,23 +28,6 @@ export type ExploreSighting = {
   };
 };
 
-// userData {
-//   username
-// }
-
-// const sightingsQuery = gql`
-//   query Sightings {
-//     sightings {
-//       userId
-//       birdId
-//       birdData {
-//         name
-//         species
-//       }
-//     }
-//   }
-// `;
-
 type Props = {
   data: SightingBirdNameArray;
   loading: boolean;
@@ -52,9 +35,6 @@ type Props = {
 };
 
 export default function Statistics(props: Props) {
-  // const { loading, error, data } = useQuery(sightingsQuery, {
-  //   fetchPolicy: 'cache-and-network',
-  // });
   if (props.error) {
     return <p className="font-mono">Unable to load data please try again.</p>;
   }
