@@ -7,6 +7,7 @@ import {
 } from '../../../../database/database';
 import AccountButton from '../../../components/AccountButton';
 import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
+import ReportButtonSmall from '../../../components/ReportButtonSmall';
 import BirdData from './BirdData';
 
 type Props = {
@@ -41,8 +42,11 @@ export default async function BirdPage(props: Props) {
           </span>
           <span className="font-mono text-2xl font-normal"> : Explore</span>
         </div>
-        <div className="md:pr-8 md:ml-auto">
-          <ExploreButtonSmall />
+        <div className="flex md:pr-8 md:ml-auto">
+          <div className="hidden md:block mr-8">
+            <ExploreButtonSmall />
+          </div>
+          <ReportButtonSmall />
         </div>
         <AccountButton userId={user?.id} />
       </section>

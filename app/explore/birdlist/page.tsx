@@ -5,6 +5,7 @@ import { getClient } from '../../../util/apolloClient';
 import AccountButtonServerSide from '../../components/AccountButtonServerSide';
 import BirdList from '../../components/BirdList';
 import ExploreButton from '../../components/ExploreButton';
+import ExploreButtonSmall from '../../components/ExploreButtonSmall';
 import LoadingStatement from '../../components/LoadingStatement';
 import ReportButton from '../../components/ReportButton';
 import ReportButtonSmall from '../../components/ReportButtonSmall';
@@ -36,9 +37,13 @@ export default async function BirdListPage() {
               orniTwo
             </Link>
           </span>
-          <span className="font-mono text-2xl font-normal"> : Explore</span>
+          <span className="font-mono text-2xl font-normal"> : Guides</span>
         </div>
-        <div className="md:pr-8 md:ml-auto">
+
+        <div className="flex md:pr-8 md:ml-auto">
+          <div className="hidden md:block mr-8">
+            <ExploreButtonSmall />
+          </div>
           <ReportButtonSmall />
         </div>
         <AccountButtonServerSide />

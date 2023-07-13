@@ -15,8 +15,13 @@ type Props = {
 
 export default function BirdList(props: Props) {
   return (
-    <section className="flex w-full flex-grow p-8">
-      <div className="w-full font-mono text-xl">
+    <section className="flex flex-col w-full flex-grow p-8 items-center">
+      <div className="pt-4">
+        <h2 className="font-mono text-2xl text-center pb-8">
+          List of supported birds
+        </h2>
+      </div>
+      <div className="w-full font-mono text-xl md:max-w-xl">
         {props.data.birds.map((bird) => {
           return (
             <div

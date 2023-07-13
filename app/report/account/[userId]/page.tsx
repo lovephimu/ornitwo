@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { getUserBySessionToken } from '../../../../database/database';
 import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
 import LogoutButton from '../../../components/LogoutButton';
+import ReportButtonSmall from '../../../components/ReportButtonSmall';
 import AccountData from './AccountData';
 
 type Props = {
@@ -34,7 +35,10 @@ export default async function AccountPage(props: Props) {
           </span>
           <span className="font-mono text-2xl font-normal"> : Explore</span>
         </div>
-        <div className="md:pr-8 md:ml-auto">
+        <div className="flex md:pr-8 md:ml-auto">
+          <div className="hidden md:block mr-8">
+            <ReportButtonSmall />
+          </div>
           <LogoutButton token={token} />
         </div>
         <ExploreButtonSmall />
