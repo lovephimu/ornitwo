@@ -9,21 +9,23 @@ import LoadingStatement from '../../components/LoadingStatement';
 import ReportButton from '../../components/ReportButton';
 import ReportButtonSmall from '../../components/ReportButtonSmall';
 
-export default async function BirdListPage() {
-  // const { data, loading, error } = await getClient().query({
-  //   query: gql`
-  //     query Birds {
-  //       birds {
-  //         name
-  //         species
-  //         id
-  //       }
-  //     }
-  //   `,
-  // });
+export const dynamic = 'force-dynamic';
 
-  // if (loading) return <LoadingStatement />;
-  // if (error) return <p className="font-mono">Error. Please try again.</p>;
+export default async function BirdListPage() {
+  const { data, loading, error } = await getClient().query({
+    query: gql`
+      query Birds {
+        birds {
+          name
+          species
+          id
+        }
+      }
+    `,
+  });
+
+  if (loading) return <LoadingStatement />;
+  if (error) return <p className="font-mono">Error. Please try again.</p>;
 
   return (
     <main className="flex flex-col w-full items-center h-screen">
@@ -51,7 +53,7 @@ export default async function BirdListPage() {
           <h2 className="font-mono text-2xl">Explore</h2>
         </div>
       </section>
-      {/* <BirdList data={data} /> */}
+      <BirdList data={data} />
       <section className="flex flex-col self-start w-full h-60 text-3xl">
         <ExploreButton />
         <ReportButton />
