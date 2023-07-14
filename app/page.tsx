@@ -1,5 +1,6 @@
 // import Image from 'next/image';
 
+import Image from 'next/image';
 import BasicButton from './components/BasicButton';
 import ExploreButton from './components/ExploreButton';
 import LoadButton from './components/LoadButton';
@@ -9,9 +10,15 @@ export default function Home() {
   return (
     <main className="flex flex-col w-full items-center h-screen">
       <section className="flex flex-grow flex-col justify-center items-center">
-        <h1 className="font-serif font-semibold text-6xl md:pt-16">orniTwo</h1>
+        <Image
+          src="/images/image_bird_1.png"
+          alt="Title Picture"
+          className="hidden md:block pt-8"
+          width="200"
+          height="200"
+        />
+        <h1 className="font-serif font-semibold text-6xl md:pt-2">orniTwo</h1>
         <h2 className="pt-8 pb-16 font-mono">a birdwatching web app</h2>
-        <h2 className="hidden md:block font-mono text-2xl pb-8">Read me!</h2>
         <div className="hidden md:flex font-mono w-3/4 justify-center gap-x-16">
           <div className="flex flex-col items-center w-1/2 ">
             <div className="flex items-center flex-col w-full text-center max-w-2xl border border-dotted border-yellow-550 rounded-md p-8 min-h-full">
