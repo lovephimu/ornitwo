@@ -1,8 +1,10 @@
+![Ornitwo Logo](https://github.com/lovephimu/ornitwo/blob/next-update/public/images/title_pic.png)
+
 # Ornitwo Birdwatching Web App
 
-**Technologies Used:** Next.js, PostgresSQL, GraphQL, Google Places, Leaflet, Chart.js
-
 OrniTwo is a full stack birdwatching web app deployed on Vercel. It allows quick tracking of bird sightings for ornithologists, whether full-time or hobbyists.
+
+**Technologies Used:** Next.js, PostgresSQL, GraphQL, Google Places, Leaflet, Chart.js
 
 The app was built using Next.js, PostgresSQL, and GraphQL. It leverages Google Places, Leaflet, and Chart.js for data visualization.
 
