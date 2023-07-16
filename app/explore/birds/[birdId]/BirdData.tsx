@@ -21,6 +21,9 @@ const SightingMap = dynamic(() => import('../../../components/SightingMap'), {
 
 type Props = {
   birdId: string;
+  birdName: string;
+  species: string;
+  bio: string;
 };
 
 export type SightingsByBirdResponse = {
@@ -44,7 +47,7 @@ export type SightingByBird = {
 };
 
 const sightingsQuery = gql`
-  query SightingsByBird($sightingsByBirdId: ID!, $birdId: ID!) {
+  query SightingsByBird($sightingsByBirdId: ID!) {
     sightingsByBird(id: $sightingsByBirdId) {
       userData {
         id
@@ -55,23 +58,13 @@ const sightingsQuery = gql`
       timeStamp
       lat
       lng
-      birdData {
-        name
-        species
-      }
-    }
-    bird(id: $birdId) {
-      name
-      species
-      bio
-      id
     }
   }
 `;
 
 export default function BirdData(props: Props) {
   const { loading, error, data } = useQuery(sightingsQuery, {
-    variables: { sightingsByBirdId: props.birdId, birdId: props.birdId },
+    variables: { sightingsByBirdId: props.birdId },
     fetchPolicy: 'cache-and-network',
   });
   if (error) {
@@ -91,10 +84,10 @@ export default function BirdData(props: Props) {
           </div>
         </section>
         <h1 className="font-serif font-semibold text-5xl pt-8 text-center px-8">
-          {capitalizeFirstLetter(data.bird.name)}
+          {capitalizeFirstLetter(props.birdName)}
         </h1>
         <h2 className="text-2xl py-4">
-          {capitalizeFirstLetterOnly(data.bird.species)}
+          {capitalizeFirstLetterOnly(props.species)}
         </h2>
 
         <div className="md:w-96">
@@ -102,12 +95,12 @@ export default function BirdData(props: Props) {
             height={600}
             width={600}
             alt="bird portrait"
-            src={`/images/image_bird_${data.bird.id}.png`}
+            src={`/images/image_bird_${props.birdId}.png`}
           />
         </div>
-        {data.bird.bio ? (
+        {props.bio ? (
           <h3 className="font-serif font-semibold text-3xl p-8">
-            {capitalizeFirstLetter(data.bird.bio)}
+            {capitalizeFirstLetter(props.bio)}
           </h3>
         ) : (
           <span />
@@ -117,7 +110,7 @@ export default function BirdData(props: Props) {
         <div className="flex flex-col w-full justify-center items-center h-96 font-mono bg-gray-800">
           <h2 className="font-mono text-2xl">Sad news!</h2>
           <p className="p-8 text-center">
-            Noone has seen {capitalizeFirstLetter(data.bird.name)} in a while!
+            Noone has seen {capitalizeFirstLetter(props.birdName)} in a while!
             Have you? Be the first to{' '}
             <Link href={'/report' as Route}>report it.</Link>
           </p>

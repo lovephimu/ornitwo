@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 import { Route } from 'next';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
@@ -5,8 +6,10 @@ import {
   getUserBySessionToken,
   getValidSessionByToken,
 } from '../../../../database/database';
+import { getClient } from '../../../../util/apolloClient';
 import AccountButton from '../../../components/AccountButton';
 import ExploreButtonSmall from '../../../components/ExploreButtonSmall';
+import LoadingStatement from '../../../components/LoadingStatement';
 import ReportButtonSmall from '../../../components/ReportButtonSmall';
 import BirdData from './BirdData';
 
@@ -16,7 +19,26 @@ type Props = {
   };
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function BirdPage(props: Props) {
+  // build server side query
+  const { data, loading } = await getClient().query({
+    query: gql`
+      query Birds($birdId: ID! = ${props.params.birdId}) {
+        bird(id: $birdId) {
+          name
+          species
+          bio
+        }
+      }
+    `,
+  });
+
+  if (loading) {
+    return <LoadingStatement />;
+  }
+
   // get cookie
   const sessionTokenCookie = cookies().get('sessionToken');
   // look for session in database
@@ -51,7 +73,12 @@ export default async function BirdPage(props: Props) {
         <AccountButton userId={user?.id} />
       </section>
 
-      <BirdData birdId={props.params.birdId} />
+      <BirdData
+        birdId={props.params.birdId}
+        birdName={data.bird.name}
+        species={data.bird.species}
+        bio={data.bird.bio}
+      />
     </main>
   );
 }
