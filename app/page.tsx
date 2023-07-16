@@ -48,7 +48,7 @@ export default function Home() {
                 <p className="font-extralight pt-4 pb-8">
                   Or check out our list of{' '}
                   <Link
-                    className="text-bold"
+                    className="font-bold"
                     href={'/explore/birdlist' as Route}
                   >
                     trackable birds.
