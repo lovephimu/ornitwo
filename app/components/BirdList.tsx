@@ -1,5 +1,7 @@
+'use client';
 import { capitalizeFirstLetter } from '../functions/capitalizeFirstLetter';
 import { capitalizeFirstLetterOnly } from '../functions/capitalizeFirstLetterOnly';
+import { copyToClipBoard } from '../functions/copyToClipBoard';
 
 type Props = {
   data: {
@@ -15,13 +17,13 @@ type Props = {
 
 export default function BirdList(props: Props) {
   return (
-    <section className="flex flex-col w-full flex-grow p-8 items-center">
+    <section className="flex flex-col item-center md:items-start w-full flex-grow p-8 ">
       <div className="pt-4">
-        <h2 className="font-mono text-2xl text-center pb-8">
+        <h2 className="md:pl-8 font-mono text-2xl text-center pb-8">
           List of supported birds
         </h2>
       </div>
-      <div className="w-full font-mono text-xl md:max-w-xl">
+      <div className="w-full font-mono text-xl md:max-w-xl md:pl-16">
         {props.data.birds.map((bird) => {
           return (
             <div
@@ -35,7 +37,14 @@ export default function BirdList(props: Props) {
                 </span>
               </div>
               <div>
-                <span>copy</span>
+                <button
+                  className="text-sm md:text-xl"
+                  onClick={async () => {
+                    await copyToClipBoard(bird.name);
+                  }}
+                >
+                  copy
+                </button>
               </div>
             </div>
           );
