@@ -1,6 +1,8 @@
 // import Image from 'next/image';
 
+import { Route } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import BasicButton from './components/BasicButton';
 import ExploreButton from './components/ExploreButton';
 import LoadButton from './components/LoadButton';
@@ -44,7 +46,13 @@ export default function Home() {
                   reporting a 'House Sparrow'
                 </p>
                 <p className="font-extralight pt-4 pb-8">
-                  Or check out our list of trackable birds.
+                  Or check out our list of{' '}
+                  <Link
+                    className="text-bold"
+                    href={'/explore/birdlist' as Route}
+                  >
+                    trackable birds.
+                  </Link>
                 </p>
               </div>
               <BasicButton buttonLink="/report" buttonText="Report" />
