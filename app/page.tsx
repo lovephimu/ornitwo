@@ -10,7 +10,7 @@ import ReportButton from './components/ReportButton';
 
 export default function Home() {
   return (
-    <main className="flex flex-col w-full items-center h-screen">
+    <main className="flex flex-col w-full items-center pb-32">
       <section className="flex flex-grow flex-col justify-center items-center">
         <Image
           src="/images/image_bird_1.png"

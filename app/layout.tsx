@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-gray-800 text-yellow-550 ${sans.variable} ${mono.variable} ${serif.variable}`}
+        className={`bg-gray-800 text-yellow-550 ${sans.variable} ${mono.variable} ${serif.variable} h-screen`}
       >
         <ApolloClientProvider>{children}</ApolloClientProvider>
       </body>
